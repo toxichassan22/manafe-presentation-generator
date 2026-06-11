@@ -90,18 +90,26 @@ function syncToGitHub() {
   
   var gitUrl = 'https://toxichassan22:' + token + '@github.com/toxichassan22/manafe-presentation-generator.git';
   
-  // Use force flag -f to add files that are in .gitignore (systemprombet and users_db.json)
-  var cmd = 'git config user.email "toxichassan22@github.com" && ' +
+  // Check if git repo exists, if not initialize one (Docker container won't have .git)
+  var initCmd = '';
+  if (!fs.existsSync(path.join(__dirname, '.git'))) {
+    initCmd = 'git init && git remote add origin ' + gitUrl + ' && git fetch origin main && git reset origin/main && ';
+  }
+  
+  var cmd = initCmd +
+            'git config user.email "toxichassan22@github.com" && ' +
             'git config user.name "toxichassan22" && ' +
             'git add -f systemprombet systemprombet.txt systemprombet.json users_db.json && ' +
-            'git commit -m "Auto-save chat history and backup [bot]" && ' +
-            'git push ' + gitUrl + ' main';
+            'git diff --cached --quiet && echo "No changes to commit" || ' +
+            '(git commit -m "Auto-save chat history and backup [bot]" && ' +
+            'git push ' + gitUrl + ' HEAD:main)';
             
-  exec(cmd, function(err, stdout, stderr) {
+  exec(cmd, { cwd: __dirname }, function(err, stdout, stderr) {
     if (err) {
       console.error('[Git Auto-Save] Sync failed:', err.message);
+      if (stderr) console.error('[Git Auto-Save] stderr:', stderr);
     } else {
-      console.log('[Git Auto-Save] Synced training chat history to GitHub successfully!');
+      console.log('[Git Auto-Save] ' + (stdout || 'Synced successfully'));
     }
   });
 }
