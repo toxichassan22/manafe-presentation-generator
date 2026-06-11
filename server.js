@@ -1,7 +1,7 @@
 var express = require('express');
 var path = require('path');
 var fs = require('fs');
-var { execSync } = require('child_process');
+var { execSync, exec } = require('child_process');
 
 var app = express();
 var PORT = process.env.PORT || 3000;
@@ -74,9 +74,36 @@ function writeSystemPrombetBackup(messages, aiResponse) {
     fs.writeFileSync(path.join(__dirname, 'systemprombet'), backupContent, 'utf8');
     fs.writeFileSync(path.join(__dirname, 'systemprombet.txt'), backupContent, 'utf8');
     fs.writeFileSync(path.join(__dirname, 'systemprombet.json'), JSON.stringify(merged, null, 2), 'utf8');
+    
+    // Auto-sync files to GitHub in background if token exists
+    syncToGitHub();
   } catch (err) {
     console.error('Failed to write systemprombet backup:', err.message);
   }
+}
+
+function syncToGitHub() {
+  var token = process.env.GITHUB_TOKEN;
+  if (!token) {
+    return; // Silently skip if no GitHub token is provided
+  }
+  
+  var gitUrl = 'https://toxichassan22:' + token + '@github.com/toxichassan22/manafe-presentation-generator.git';
+  
+  // Use force flag -f to add files that are in .gitignore (systemprombet and users_db.json)
+  var cmd = 'git config user.email "toxichassan22@github.com" && ' +
+            'git config user.name "toxichassan22" && ' +
+            'git add -f systemprombet systemprombet.txt systemprombet.json users_db.json && ' +
+            'git commit -m "Auto-save chat history and backup [bot]" && ' +
+            'git push ' + gitUrl + ' main';
+            
+  exec(cmd, function(err, stdout, stderr) {
+    if (err) {
+      console.error('[Git Auto-Save] Sync failed:', err.message);
+    } else {
+      console.log('[Git Auto-Save] Synced training chat history to GitHub successfully!');
+    }
+  });
 }
 
 function buildMessagesWithTraining(systemContent, currentMessages, userId) {
