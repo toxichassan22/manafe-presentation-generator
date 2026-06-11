@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}" dir="{{ 'rtl' if lang == 'ar' else 'ltr' }}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+{{ css_vars }}
+{{ component_css }}
+</style>
+</head>
+<body class="{{ 'rtl' if lang == 'ar' else 'ltr' }}">
+{{ icons_svg | safe }}
+<div id="app"></div>
+<script>
+{{ utils_js | safe }}
+
+const I18N = {{ i18n_json | safe }};
+
+let state = null;
+let uiLang = "{{ lang }}";
+let activeSlideIdx = 0;
+let saveTimer = null;
+
+function L(k) { return (I18N[uiLang] || I18N.ar)[k] || k; }
+
+function applyLang() {
+  document.body.className = uiLang === "en" ? "ltr" : "rtl";
+  document.documentElement.lang = uiLang;
+  document.documentElement.dir = uiLang === "en" ? "ltr" : "rtl";
+}
+
+function getSlideTitle(s) {
+  if (s.title) return s.title;
+  if (s.content && s.content.title) return s.content.title;
+  return s.topic || L("slide");
+}
+function getSlideSubtitle(s) {
+  const c = s.content || s;
+  return c.subtitle || c.description || c.concept || c.summary || c.message || c.vision || "";
+}
+function getSlideBullets(s) {
+  const c = s.content || s;
+  for (const key of ["bullets","highlights","key_features","features","amenities","materials","strengths"]) {
+    if (c[key] && Array.isArray(c[key])) {
+      return c[key].map(b => typeof b === "string" ? b : (b.name || b.label || JSON.stringify(b))).slice(0, 6);
+    }
+  }
+  return [];
+}
+
+function scheduleSave() {
+  if (saveTimer) clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
+    sendToStreamlit({ action: "save_slides", slides: state.slides });
+    const hint = document.getElementById("saveHint");
+    if (hint) {
+      hint.textContent = L("saved");
+      hint.classList.add("show");
+      setTimeout(() => hint.classList.remove("show"), 2000);
+    }
+  }, 600);
+}
+
+function renderApp() {
+  if (!state) return;
+  applyLang();
+  const slides = state.slides;
+  const projectName = state.project_name || L("slide");
+  const app = document.getElementById("app");
+
+  let html = `
+  <div class="top-bar">
+    <div class="top-bar-right">
+      <div class="brand-icon">M</div>
+      <div>
+        <div style="font-size:0.7rem;color:var(--color-text-tertiary);font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">${L("editor")}</div>
+        <span style="font-size:0.95rem;font-weight:600;color:var(--color-text-primary);max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;">${escHtml(projectName)}</span>
+      </div>
+    </div>
+    <div class="top-bar-left" style="display:flex;align-items:center;gap:8px;">
+      <span class="save-hint" id="saveHint"></span>
+      <button type="button" class="top-btn" onclick="sendAction('new')">${L("newPres")}</button>
+      <button type="button" class="top-btn primary" onclick="downloadPPTX()"><svg class="icon"><use href="#icon-download"/></svg> ${L("download")}</button>
+    </div>
+  </div>
+  <div class="app-layout">`;
+
+  html += `<div class="sidebar">`;
+  slides.forEach((s, i) => {
+    const isActive = i === activeSlideIdx ? "active" : "";
+    const title = getSlideTitle(s);
+    const hasImg = !!s.image_b64;
+    html += `<div class="thumb ${isActive}" onclick="scrollToSlide(${i})" id="thumb-${i}">
+      <span class="thumb-number">${i + 1}</span>
+      <div class="thumb-inner">
+        ${hasImg ? `<img src="data:image/png;base64,${s.image_b64}" alt="${escHtml(title)}">` : `<svg class="icon" style="width:20px;height:20px;"><use href="#icon-file-text"/></svg>`}
+      </div>
+    </div>`;
+  });
+  html += `</div>`;
+
+  html += `<div class="main-content" id="mainContent">`;
+  slides.forEach((s, i) => {
+    const title = getSlideTitle(s);
+    const subtitle = getSlideSubtitle(s);
+    const bullets = getSlideBullets(s);
+    const hasImg = !!s.image_b64;
+    const isActive = i === activeSlideIdx ? "active" : "";
+    const isCover = (s.slide_type || "") === "cover" ? " cover" : "";
+
+    html += `<div class="slide-card ${isActive}" id="slide-${i}" data-idx="${i}">
+      <div class="slide-inner${isCover}${!hasImg ? " no-image" : ""}">`;
+    if (hasImg) {
+      html += `<div class="slide-image-col"><img src="data:image/png;base64,${s.image_b64}" alt="${escHtml(title)}"></div>`;
+    }
+    html += `<div class="slide-text-col">`;
+    if (i === 0) html += `<div class="slide-accent-bar"></div>`;
+    html += `<h2 contenteditable="true" role="textbox" onblur="onEditTitle(${i},this.innerText)">${escHtml(title)}</h2>`;
+    if (subtitle) {
+      html += `<div class="subtitle" contenteditable="true" role="textbox" onblur="onEditSubtitle(${i},this.innerText)">${escHtml(subtitle)}</div>`;
+    }
+    if (bullets.length > 0) {
+      html += `<ul class="bullets">`;
+      bullets.forEach((b, bi) => {
+        html += `<li contenteditable="true" role="textbox" onblur="onEditBullet(${i},${bi},this.innerText)">${escHtml(b)}</li>`;
+      });
+      html += `</ul>`;
+    }
+    html += `</div></div>
+      <div class="slide-toolbar">
+        <button type="button" class="slide-tool-btn" onclick="sendSlideAction(${i},'regen')"><svg class="icon"><use href="#icon-refresh-cw"/></svg> ${L("regen")}</button>
+      </div>
+    </div>`;
+  });
+  html += `</div>`;
+  html += `</div>`;
+
+  app.innerHTML = html;
+  setFrameHeight(window.innerHeight);
+  setupScrollObserver();
+}
+
+function setActive(idx) {
+  activeSlideIdx = idx;
+  document.querySelectorAll(".slide-card").forEach((c, i) => c.classList.toggle("active", i === idx));
+  document.querySelectorAll(".thumb").forEach((t, i) => t.classList.toggle("active", i === idx));
+}
+
+function scrollToSlide(idx) {
+  setActive(idx);
+  const el = document.getElementById(`slide-${idx}`);
+  if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+function setupScrollObserver() {
+  const container = document.getElementById("mainContent");
+  if (!container) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+        const idx = parseInt(entry.target.dataset.idx, 10);
+        if (!isNaN(idx)) setActive(idx);
+      }
+    });
+  }, { root: container, threshold: 0.5 });
+  container.querySelectorAll(".slide-card").forEach(c => observer.observe(c));
+}
+
+function onEditTitle(idx, text) {
+  if (!state) return;
+  const s = state.slides[idx];
+  if (s.content) s.content.title = text.trim();
+  else s.title = text.trim();
+  scheduleSave();
+}
+function onEditSubtitle(idx, text) {
+  if (!state) return;
+  const c = state.slides[idx].content || state.slides[idx];
+  for (const k of ["subtitle","description","concept","summary","message","vision"]) {
+    if (c[k] !== undefined) { c[k] = text.trim(); scheduleSave(); return; }
+  }
+  c.description = text.trim();
+  scheduleSave();
+}
+function onEditBullet(idx, bi, text) {
+  if (!state) return;
+  const c = state.slides[idx].content || state.slides[idx];
+  for (const key of ["bullets","highlights","key_features","features"]) {
+    if (c[key] && Array.isArray(c[key]) && bi < c[key].length) {
+      c[key][bi] = text.trim();
+      scheduleSave();
+      return;
+    }
+  }
+}
+
+function sendAction(action) {
+  sendToStreamlit({ action, slides: state ? state.slides : [] });
+}
+function sendSlideAction(idx, action) {
+  sendToStreamlit({ action, slide_index: idx, slides: state ? state.slides : [] });
+}
+
+function downloadPPTX() {
+  if (!state || !state.pptx_b64) {
+    console.warn("PPTX not ready in memory, falling back to Streamlit action.");
+    sendAction('download');
+    return;
+  }
+  try {
+    const b64 = state.pptx_b64;
+    const filename = state.pptx_filename || "proposal.pptx";
+    const byteCharacters = atob(b64);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation' });
+    const url = URL.createObjectURL(blob);
+    
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    console.error("Direct download failed, falling back to Streamlit:", err);
+    sendAction('download');
+  }
+}
+
+window.addEventListener("message", (event) => {
+  if (event.data.type === "streamlit:render") {
+    const args = event.data.args;
+    if (!state) {
+      uiLang = args.lang || "ar";
+      state = {
+        slides: JSON.parse(JSON.stringify(args.slides || [])),
+        project_name: args.project_name || "",
+        pptx_b64: args.pptx_b64 || "",
+        pptx_filename: args.pptx_filename || ""
+      };
+    } else {
+      state.pptx_b64 = args.pptx_b64 || "";
+      state.pptx_filename = args.pptx_filename || "";
+    }
+    renderApp();
+  }
+});
+
+signalReady();
+</script>
+</body>
+</html>

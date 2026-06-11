@@ -1,0 +1,82 @@
+[
+  {
+    "title": "مشروع منافع التجاري - جدة",
+    "subtitle": "مجمع تجاري وإداري متكامل بتصميم عصري يواكب تطلعات الأعمال",
+    "image_prompt": "A photorealistic architectural rendering of a 10-story modern commercial and administrative complex in Jeddah, featuring a sleek glass and steel facade, situated on a flat urban plot surrounded by a bustling city street, high-end professional atmosphere, bright daylight, professional architectural photography style.",
+    "slide_type": "cover",
+    "slide_index": 0,
+    "requires_image": true
+  },
+  {
+    "title": "نظرة عامة على مشروع منافع التجاري",
+    "description": "يعد مشروع منافع التجاري مجمعاً متكاملاً يجمع بين المساحات التجارية والإدارية في قلب مدينة جدة. يتميز المشروع بتصميم Modern عصري يمتد على 10 طوابق، ويقام على أرض مستوية ضمن بيئة حضرية (Urban) متميزة، بميزانية استثمارية قدرها 50 مليون ريال لتقديم بيئة عمل وتجارة متطورة.",
+    "slide_type": "standard",
+    "slide_index": 1,
+    "requires_image": false
+  },
+  {
+    "title": "تحليل الموقع والأرض - مشروع منافع التجاري",
+    "description": "يتميز موقع المشروع في مدينة جدة بطبيعة أرض مستوية (flat terrain)، مما يسهل عمليات الإنشاء والتطوير الهيكلي. يقع المشروع ضمن محيط حضري (urban surroundings) حيوي، مما يعزز من القيمة الاستثمارية للمجمع التجاري والإداري المتكامل. تم اختيار الموقع لضمان سهولة الوصول وتكامل الخدمات، مع مراعاة التصميم المعماري الحديث (modern style) الذي يتناغم مع النسيج العمراني للمدينة.",
+    "image_prompt": "A high-end architectural site analysis visualization showing a flat plot of land in a vibrant urban district of Jeddah. The surrounding area features modern city infrastructure, paved roads, and neighboring commercial buildings. The perspective is an aerial isometric view highlighting the terrain flatness and the strategic urban connectivity, with clean lines and professional architectural diagrammatic overlays indicating site boundaries and access points.",
+    "slide_type": "standard",
+    "slide_index": 2,
+    "requires_image": true
+  },
+  {
+    "title": "الأدوار الأرضي والأول: وجهة الأعمال والخدمات",
+    "description": "يضم الدور الأرضي مساحات تجارية واسعة ذات واجهات زجاجية عصرية مصممة لاستقطاب العلامات التجارية الكبرى، بينما يخصص الدور الأول لتقديم خدمات متكاملة ومرافق مساندة تضمن تجربة تسوق مريحة وفعالة للزوار، مع مراعاة انسيابية الحركة وتوزيع المساحات لتعظيم العائد الاستثماري.",
+    "image_prompt": "A photorealistic architectural rendering of the ground and first floor of a modern commercial complex in Jeddah, featuring expansive floor-to-ceiling glass storefronts, sleek minimalist facade materials, vibrant urban street lighting, and a welcoming pedestrian entrance, set in a bustling modern city street environment.",
+    "slide_type": "standard",
+    "slide_index": 3,
+    "requires_image": true
+  },
+  {
+    "title": "الأدوار 2-6: المكاتب الإدارية",
+    "description": "تتميز الأدوار من الثاني إلى السادس في مشروع منافع التجاري بتصميم عصري يركز على الكفاءة والإنتاجية. توفر هذه المساحات الإدارية بيئة عمل متكاملة تلبي احتياجات الشركات الحديثة، مع توزيع مرن للمساحات يضمن الاستفادة القصوى من الإضاءة الطبيعية والتخطيط المفتوح (Open-plan layout)، مما يعزز من بيئة العمل التعاونية في قلب مدينة جدة.",
+    "image_prompt": "A photorealistic architectural interior rendering of a modern, high-end office floor in Jeddah, featuring floor-to-ceiling glass windows, minimalist ergonomic furniture, sleek glass partitions, polished concrete flooring, and a bright, professional atmosphere with a view of the urban city skyline.",
+    "slide_type": "standard",
+    "slide_index": 4,
+    "requires_image": true
+  },
+  {
+    "title": "الأدوار 7-10: مكاتب تنفيذية ومرافق",
+    "description": "تم تخصيص الأدوار من السابع إلى العاشر في مشروع منافع التجاري لتكون بيئة عمل استراتيجية ونخبوية. تضم هذه الطوابق مكاتب تنفيذية (Executive Offices) مصممة وفق أعلى معايير الفخامة والخصوصية، مع توفير مرافق خدمية متكاملة تشمل قاعات اجتماعات خاصة، مناطق استقبال، ومساحات استراحة مجهزة لدعم الأداء الإداري الرفيع في قلب مدينة جدة.",
+    "image_prompt": "A photorealistic architectural interior rendering of a high-end executive office floor in a modern commercial building in Jeddah. The design features floor-to-ceiling glass windows overlooking an urban cityscape, minimalist luxury furniture, premium marble flooring, and sophisticated ambient lighting. The atmosphere is professional, spacious, and bright, reflecting a corporate executive environment.",
+    "slide_type": "standard",
+    "slide_index": 5,
+    "requires_image": true
+  },
+  {
+    "title": "الميزانية والتخطيط المالي لمشروع منافع التجاري",
+    "data": [
+      {
+        "label": "إجمالي الميزانية المرصودة",
+        "value": "50 مليون ريال سعودي"
+      },
+      {
+        "label": "نطاق الاستثمار",
+        "value": "تطوير مجمع تجاري وإداري متكامل (10 طوابق)"
+      },
+      {
+        "label": "توزيع التكاليف",
+        "value": "تغطية أعمال الإنشاءات، التشطيبات الحديثة، وتجهيز البنية التحتية"
+      },
+      {
+        "label": "موقع المشروع",
+        "value": "مدينة جدة - منطقة حضرية ذات تضاريس مستوية"
+      }
+    ],
+    "slide_type": "chart",
+    "slide_index": 6,
+    "requires_image": false
+  },
+  {
+    "title": "شكراً لثقتكم في مشروع منافع التجاري",
+    "message": "نقدر اهتمامكم بمجمعنا التجاري والإداري المتكامل في جدة، والذي يمتد على 10 طوابق بتصميم عصري وميزانية استثمارية قدرها 50 مليون ريال. نحن هنا لنحول رؤيتكم إلى واقع ملموس في بيئة حضرية متميزة.",
+    "cta": "تواصلوا معنا اليوم لمناقشة فرص الاستثمار أو التأجير.",
+    "image_prompt": "A high-end photorealistic architectural visualization of the 10-story modern 'Manafe' commercial complex in Jeddah, situated on a flat urban plot, featuring sleek glass facades and premium exterior lighting, surrounded by a vibrant city street atmosphere, sunset lighting, cinematic composition.",
+    "slide_type": "closing",
+    "slide_index": 7,
+    "requires_image": true
+  }
+]

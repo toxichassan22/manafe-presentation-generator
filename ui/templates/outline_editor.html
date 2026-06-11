@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}" dir="{{ 'rtl' if lang == 'ar' else 'ltr' }}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+{{ css_vars }}
+{{ component_css }}
+</style>
+</head>
+<body class="{{ 'rtl' if lang == 'ar' else 'ltr' }}">
+{{ icons_svg | safe }}
+<div id="app"></div>
+<script>
+{{ utils_js | safe }}
+
+const I18N = {{ i18n_json | safe }};
+const THEMES = {{ themes_json | safe }};
+const DENSITIES = [
+  { id:"minimal",   labelKey:"minimal",   bars:[20] },
+  { id:"concise",   labelKey:"concise",   bars:[28,22] },
+  { id:"detailed",  labelKey:"detailed",  bars:[28,24,20] },
+  { id:"extensive", labelKey:"extensive", bars:[28,26,24,20] }
+];
+
+let state = null;
+let uiLang = "{{ lang }}";
+let dragSrcIdx = null;
+
+function L(key) { return (I18N[uiLang] || I18N.ar)[key] || key; }
+
+function applyLang() {
+  document.body.className = uiLang === "en" ? "ltr" : "rtl";
+  document.documentElement.lang = uiLang;
+  document.documentElement.dir = uiLang === "en" ? "ltr" : "rtl";
+}
+
+function renderApp() {
+  if (!state) return;
+  applyLang();
+  const app = document.getElementById("app");
+
+  let html = `<div class="customize-title">${L("outline")}</div>`;
+  html += `<div class="cards-container" id="cardsContainer">`;
+
+  state.outline.forEach((card, i) => {
+    const bullets = (card.bullets || "").replace(/\n/g, "<br>");
+    html += `
+      <div class="outline-card" draggable="true" data-idx="${i}"
+           ondragstart="onDragStart(event,${i})" ondragover="onDragOver(event,${i})"
+           ondragleave="onDragLeave(event)" ondrop="onDrop(event,${i})" ondragend="onDragEnd(event)">
+        <span class="drag-handle" aria-hidden="true"><svg class="icon"><use href="#icon-grip-vertical"/></svg></span>
+        <div class="card-number">${i+1}</div>
+        <div class="card-body">
+          <div class="card-title" contenteditable="true" role="textbox"
+               onblur="onTitleEdit(${i}, this.innerText)">${escHtml(card.topic)}</div>
+          <div class="card-bullets" contenteditable="true" role="textbox" data-placeholder="${L("bulletsPh")}"
+               onblur="onBulletsEdit(${i}, this.innerText)">${bullets}</div>
+               
+          <div class="card-image-config" style="margin-top: 12px; border-top: 1px dashed var(--color-border); padding-top: 10px;">
+            <label style="display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem; cursor: pointer; color: var(--color-text-primary);">
+              <input type="checkbox" onchange="toggleImage(${i}, this.checked)" ${card.requires_image ? 'checked' : ''} style="accent-color: var(--color-primary); cursor: pointer; width: 14px; height: 14px;">
+              <span style="font-weight: 600;">${L("requiresImage")}</span>
+            </label>
+            <div id="image-prompt-wrapper-${i}" style="${card.requires_image ? 'display: block;' : 'display: none;'} margin-top: 8px;">
+              <div style="font-size: 0.75rem; color: var(--color-text-secondary); margin-bottom: 4px;">${L("imagePromptLabel")}</div>
+              <div class="image-prompt-input" contenteditable="true" role="textbox" data-placeholder="${L("imagePromptPh")}"
+                   onblur="onImagePromptEdit(${i}, this.innerText)"
+                   style="font-size: 0.85rem; background: var(--color-surface-raised); border: 1px solid var(--color-border); padding: 8px 10px; border-radius: 4px; color: var(--color-text-primary); outline: none; min-height: 40px; direction: ltr; text-align: left;">${escHtml(card.image_prompt || '')}</div>
+            </div>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button type="button" class="card-action-btn" onclick="moveCard(${i},-1)" title="${L("moveUp")}" aria-label="${L("moveUp")}"><svg class="icon"><use href="#icon-arrow-up"/></svg></button>
+          <button type="button" class="card-action-btn" onclick="moveCard(${i},1)" title="${L("moveDown")}" aria-label="${L("moveDown")}"><svg class="icon"><use href="#icon-arrow-down"/></svg></button>
+          <button type="button" class="card-action-btn danger" onclick="deleteCard(${i})" title="${L("delete")}" aria-label="${L("delete")}"><svg class="icon"><use href="#icon-trash"/></svg></button>
+        </div>
+      </div>`;
+  });
+
+  html += `</div>`;
+  html += `<button type="button" class="add-card-btn" onclick="addCard()"><svg class="icon"><use href="#icon-plus"/></svg> ${L("addCard")}</button>`;
+  html += `<div class="card-count-bar" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+    <span>${state.outline.length} ${L("cardsTotal")}</span>
+    <span>${L("cardBreaks")} <code style="background:var(--color-surface-raised);padding:2px 6px;border-radius:4px;">${L("cardBreaksCode")}</code> ${L("cardBreaksEnd")}</span>
+  </div>`;
+
+  html += `<div class="customize-title">${L("customize")}</div>`;
+  html += `<div class="customize-panel"><div class="panel-header">${L("textContent")}</div><div class="panel-sub">${L("textSub")}</div><div class="density-options">`;
+  DENSITIES.forEach(d => {
+    const active = state.density === d.id ? "active" : "";
+    const barsHtml = d.bars.map(w => `<div class="density-bar" style="width:${w}px"></div>`).join("");
+    html += `<div class="density-option ${active}" onclick="setDensity('${d.id}')"><div>${barsHtml}</div><div class="density-label">${L(d.labelKey)}</div></div>`;
+  });
+  html += `</div></div>`;
+
+  html += `<div class="customize-panel"><div class="panel-header">${L("theme")}</div><div class="panel-sub">${L("themeSub")}</div><div class="theme-grid">`;
+  THEMES.forEach(t => {
+    const active = state.theme === t.id ? "active" : "";
+    html += `<div class="theme-card ${active}" onclick="setTheme('${t.id}')">
+      <div class="theme-preview" style="background:${t.bg}">
+        <div style="color:${t.title};font-weight:700;font-size:0.95rem;">${L("themeTitle")}</div>
+        <div style="color:${t.body};font-size:0.75rem;">${L("themeBody")}</div>
+      </div><div class="theme-name">${t.name}</div></div>`;
+  });
+  html += `</div></div>`;
+
+  html += `<div class="bottom-bar">
+    <span class="card-count-bar">${state.outline.length} ${L("cardsTotal")}</span>
+    <div style="display:flex;gap:12px;">
+      <button type="button" class="btn btn-secondary" onclick="goBack()">${L("back")}</button>
+      <button type="button" class="btn btn-primary" onclick="doGenerate()"><svg class="icon"><use href="#icon-wand"/></svg> ${L("generate")}</button>
+    </div>
+  </div>`;
+
+  app.innerHTML = html;
+  setTimeout(() => setFrameHeight(), 50);
+}
+
+function onTitleEdit(idx, text) { state.outline[idx].topic = text.trim(); }
+function onBulletsEdit(idx, text) { state.outline[idx].bullets = text.trim(); }
+
+function toggleImage(idx, checked) { 
+  state.outline[idx].requires_image = checked;
+  const wrapper = document.getElementById(`image-prompt-wrapper-${idx}`);
+  if (wrapper) wrapper.style.display = checked ? 'block' : 'none';
+}
+function onImagePromptEdit(idx, text) { state.outline[idx].image_prompt = text.trim(); }
+
+function deleteCard(idx) {
+  if (state.outline.length <= 1) return;
+  state.outline.splice(idx, 1);
+  renderApp();
+}
+function addCard() {
+  state.outline.push({ topic: L("newSlide"), slide_type: "standard", requires_image: false, bullets: "" });
+  renderApp();
+}
+function moveCard(idx, dir) {
+  const target = idx + dir;
+  if (target < 0 || target >= state.outline.length) return;
+  const item = state.outline.splice(idx, 1)[0];
+  state.outline.splice(target, 0, item);
+  renderApp();
+}
+
+function onDragStart(e, idx) { dragSrcIdx = idx; e.currentTarget.classList.add("dragging"); e.dataTransfer.effectAllowed = "move"; }
+function onDragOver(e, idx) {
+  e.preventDefault();
+  if (idx !== dragSrcIdx) {
+    document.querySelectorAll(".outline-card").forEach(c => c.classList.remove("drag-over"));
+    e.currentTarget.classList.add("drag-over");
+  }
+}
+function onDragLeave(e) { e.currentTarget.classList.remove("drag-over"); }
+function onDrop(e, targetIdx) {
+  e.preventDefault();
+  e.currentTarget.classList.remove("drag-over");
+  if (dragSrcIdx === null || dragSrcIdx === targetIdx) return;
+  const item = state.outline.splice(dragSrcIdx, 1)[0];
+  state.outline.splice(targetIdx, 0, item);
+  dragSrcIdx = null;
+  renderApp();
+}
+function onDragEnd() {
+  dragSrcIdx = null;
+  document.querySelectorAll(".outline-card").forEach(c => {
+    c.classList.remove("dragging");
+    c.classList.remove("drag-over");
+  });
+}
+
+function setDensity(id) { state.density = id; renderApp(); }
+function setTheme(id) { state.theme = id; renderApp(); }
+
+function goBack() { sendToStreamlit({ action: "back" }); }
+function doGenerate() {
+  const densityMap = {
+    minimal: "Minimal (نقاط مختصرة جداً)",
+    concise: "Concise (موجز ومباشر)",
+    detailed: "Detailed (تفصيلي)",
+    extensive: "Extensive (شامل ومطول)"
+  };
+  const themeObj = THEMES.find(t => t.id === state.theme) || THEMES[0];
+  sendToStreamlit({
+    action: "generate",
+    outline: state.outline,
+    density: densityMap[state.density] || state.density,
+    theme: {
+      id: themeObj.id, name: themeObj.name, font: "Cairo",
+      bg_color: themeObj.bg, text_color: themeObj.title,
+      body_color: themeObj.body, accent_color: themeObj.accent
+    }
+  });
+}
+
+window.addEventListener("message", (event) => {
+  if (event.data.type === "streamlit:render") {
+    const args = event.data.args;
+    if (!state) {
+      uiLang = args.lang || "ar";
+      state = {
+        outline: JSON.parse(JSON.stringify(args.outline || [])),
+        density: args.initial_density || "concise",
+        theme: args.initial_theme || "nebula"
+      };
+    }
+    renderApp();
+  }
+});
+
+signalReady();
+</script>
+</body>
+</html>
