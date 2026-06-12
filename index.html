@@ -2221,49 +2221,73 @@
             <button class="btn primary" onclick="generateOutline()">إنشاء الهيكل</button>
             <button class="btn danger" onclick="deleteCurrentProject()">حذف المشروع</button>
           </div>
-          <p class="small muted">يمكن حفظ المشروع كمسودة.ใช "إنشاء الهيكل" لتوليد هيكل العرض الأولي قبل التفاصيل.</p>
+          <p class="small muted">يمكن حفظ المشروع كمسودة. استخدم "إنشاء الهيكل" لتوليد هيكل العرض الأولي قبل التفاصيل.</p>
         </aside>
 
         <main>
-          <!-- 1. غلاف المشروع -->
-          <section class="section active" data-title="غلاف المشروع">
-            <h2>بيانات الغلاف الأساسية</h2>
-            <p class="hint">شريحة الغلاف هي أول ما يراه العميل. تظهر فيها شعار الشركة + اسم المشروع بخط كبير + نوع
-              المشروع والمدينة + الصورة الرئيسية. اختر صورة عالية الجودة تعكس طابع المشروع.</p>
+          <section class="section active" data-title="بيانات المشروع">
+            <h2>بيانات المشروع الأساسية</h2>
+            <p class="hint">تظهر في الغلاف والتعريف والملخص.</p>
             <div class="grid">
-              <div><label>اسم المشروع</label><input id="projectName" placeholder="مثال: مجمعات منافع التجارية - جدة">
-              </div>
-              <div><label>نوع المشروع</label><select id="projectType">
-                  <option value="">اختر نوع المشروع</option>
-                  <option>تجاري</option>
-                  <option>سكني</option>
-                  <option>لوجستي</option>
-                  <option>صناعي</option>
-                  <option>ضيافة</option>
-                  <option>مكاتب إدارية</option>
-                  <option>مشروع مختلط</option>
-                  <option>ترفيهي</option>
-                </select></div>
-              <div><label>المدينة</label><input id="city" placeholder="مثال: جدة، الرياض، الدمام"></div>
-              <div><label>الموقع التفصيلي</label><input id="location"
-                  placeholder="مثال: طريق الملك عبدالعزيز، حي الأمير سلطان"></div>
+              <div><label>اسم المشروع</label><input id="projectName" value="مشروع استثماري جديد"></div>
+              <div><label>نوع المشروع</label><select id="projectType"><option>تجاري</option><option>سكني</option><option>لوجستي</option><option>صناعي</option><option>ضيافة</option><option>مكاتب إدارية</option><option>مشروع مختلط</option><option>ترفيهي</option></select></div>
+              <div><label>المدينة</label><input id="city" value="جدة"></div>
+              <div><label>الموقع التفصيلي</label><input id="location" value="طريق رئيسي / حي استراتيجي"></div>
+              <div class="full"><label>فكرة المشروع</label><textarea id="idea">تطوير مشروع استثماري متعدد الاستخدامات يضم عناصر تشغيلية وتأجيرية مصممة لتحقيق عوائد مستقرة وفرصة تخارج مجدية.</textarea></div>
+              <div><label>هيكلة المشروع</label><input id="structure" value="1 سنة تطوير + 4 سنوات تشغيل + تخارج"></div>
+              <div><label>اسم الجهة / المطور</label><input id="developer" value="منافع الاقتصادية للعقار"></div>
               <div><label>شعار إضافي للمشروع، اختياري</label><input id="logoFile" type="file" accept="image/*"></div>
               <div><label>الصورة الرئيسية للمشروع</label><input id="mainImageFile" type="file" accept="image/*"></div>
             </div>
           </section>
 
-          <!-- 2. الملخص التنفيذي -->
-          <section class="section" data-title="الملخص التنفيذي">
-            <h2>الملخص التنفيذي</h2>
-            <p class="hint">شريحة الملخص التنفيذي هي الأهم للمستثمرين. تظهر في الأعلى نص التوصية الاستثمارية، وأسفلها 6
-              بطاقات: إجمالي التكلفة، الإيرادات السنوية، إجمالي الأرباح، العائد السنوي، NOI، واسترداد رأس المال. اكتب
-              نصاً واضحاً ومقنعاً.</p>
+          <section class="section" data-title="الموقع والمميزات">
+            <h2>مميزات الموقع والمشروع</h2>
+            <p class="hint">نقاط تسويقية واستثمارية تظهر في شرائح منفصلة.</p>
             <div class="grid">
-              <div class="full"><label>التوصية الاستثمارية / الملخص التنفيذي</label><textarea id="recommendation"
-                  placeholder="اكتب نصاً مختصراً يلخص المشروع ويبرز نقاط القوة الاستثمارية..."></textarea></div>
-              <div><label>اسم معد العرض</label><input id="preparedBy" placeholder="مثال: منافع الاقتصادية للعقار"></div>
-              <div><label>بيانات التواصل</label><input id="contactInfo"
-                  placeholder="مثال: info@manafe.com | 0500000000"></div>
+              <div class="full"><label>مميزات الموقع - كل نقطة في سطر</label><textarea id="locationFeatures">يقع على محور حيوي يخدم شريحة واسعة من العملاء
+سهولة الوصول من الطرق الرئيسية
+قربه من مناطق الطلب أو الكثافة السكانية/التجارية
+موقع مناسب للتوسع والتشغيل المستقبلي</textarea></div>
+              <div class="full"><label>مميزات المشروع - كل نقطة في سطر</label><textarea id="projectFeatures">تنوع مصادر الدخل التأجيري
+قابلية التوسع وإضافة أنشطة مستقبلية
+تصميم مرن يناسب أكثر من فئة مستأجرين
+فرصة تخارج جذابة بناءً على الدخل التشغيلي</textarea></div>
+              <div class="full"><label>فرص الاستثمار ونقاط القوة - كل نقطة في سطر</label><textarea id="investmentHighlights">عوائد تشغيلية متوقعة ومستقرة
+طلب سوقي قابل للنمو
+إمكانية تحسين العائد عبر الإدارة والتشغيل
+أصل عقاري قابل لإعادة التقييم عند التخارج</textarea></div>
+            </div>
+          </section>
+
+          <section class="section" data-title="المساحات والعناصر">
+            <h2>مكونات المشروع والمساحات</h2>
+            <p class="hint">يتم احتساب إجمالي المساحة المبنية والتأجيرية.</p>
+            <div class="grid three">
+              <div><label>مساحة الأرض م²</label><input id="landArea" type="number" value="20583.93"></div>
+              <div><label>نسبة البناء %</label><input id="buildingRatio" type="number" value="38"></div>
+              <div><label>ملاحظة المساحات</label><input id="areaNote" value="تشمل المساحات التأجيرية المساحات الخارجية الخاصة عند توفرها."></div>
+            </div><br>
+            <div class="table-wrap"><table id="componentsTable"><thead><tr><th>العنصر</th><th>المساحة المبنية م²</th><th>المساحة التأجيرية م²</th><th>الإيجار بالمتر/سنة</th><th>إزالة</th></tr></thead><tbody></tbody></table></div><br>
+            <button class="btn ghost" onclick="addComponent()">+ إضافة عنصر</button>
+          </section>
+
+          <section class="section" data-title="الافتراضات المالية">
+            <h2>الافتراضات المالية والتشغيلية</h2>
+            <p class="hint">أهم مدخلات الدراسة الأولية.</p>
+            <div class="grid three">
+              <div><label>متوسط إيجار المتر</label><input id="avgRent" type="number" value="460"></div>
+              <div><label>رسوم الخدمات على المستأجرين %</label><input id="serviceFees" type="number" value="10"></div>
+              <div><label>الإيرادات السنوية</label><input id="annualRevenue" type="number" value="10000000"></div>
+              <div><label>المصروف التشغيلي السنوي</label><input id="annualOpex" type="number" value="1300000"></div>
+              <div><label>تكلفة الأرض</label><input id="landCost" type="number" value="50372236"></div>
+              <div><label>تكلفة التطوير</label><input id="developmentCost" type="number" value="24208959"></div>
+              <div><label>إجمالي الربح التشغيلي طوال الفترة</label><input id="totalOperatingProfit" type="number" value="26100000"></div>
+              <div><label>قيمة التخارج</label><input id="exitValue" type="number" value="116000000"></div>
+              <div><label>معامل الرسملة %</label><input id="capRate" type="number" value="7.5"></div>
+              <div><label>العائد السنوي المتوقع</label><input id="annualROI" value="15% - 18%"></div>
+              <div><label>نسبة NOI المتوقعة</label><input id="noiRate" value="11% - 13%"></div>
+              <div><label>استرداد رأس المال</label><input id="payback" value="5 سنوات"></div>
             </div>
             <div class="cards">
               <div class="metric"><span>إجمالي المساحة المبنية</span><strong id="mBuilt">0</strong></div>
@@ -2273,192 +2297,62 @@
             </div>
           </section>
 
-          <!-- 3. فكرة المشروع والهيكلة -->
-          <section class="section" data-title="فكرة المشروع والهيكلة">
-            <h2>فكرة المشروع والهيكلة</h2>
-            <p class="hint">شريحة تعريفية تظهر فيها 5 بطاقات: فكرة المشروع (نص طويل)، الموقع + المدينة، هيكلة المشروع
-              (مثل: سنة تطوير + 4 سنوات تشغيل)، نوع المشروع، والجهة المطورة. اجعل النصوص مختصرة وواضحة.</p>
-            <div class="grid">
-              <div class="full"><label>فكرة المشروع</label><textarea id="idea"
-                  placeholder="اكتب وصفاً مختصراً لفكرة المشروع وأهدافه الاستثمارية..."></textarea></div>
-              <div><label>هيكلة المشروع</label><input id="structure"
-                  placeholder="مثال: سنة تطوير + 4 سنوات تشغيل + تخارج"></div>
-              <div><label>اسم الجهة / المطور</label><input id="developer" placeholder="مثال: منافع الاقتصادية للعقار">
-              </div>
-            </div>
-          </section>
-
-          <!-- 4. مميزات الموقع -->
-          <section class="section" data-title="مميزات الموقع">
-            <h2>مميزات الموقع</h2>
-            <p class="hint">شريحة نقاط قوة الموقع الجغرافية. تظهر كنقاط بال UIBar (bullet list). اكتب كل نقطة في سطر
-              منفصل. ركز على: الموقع الاستراتيجي، سهولة الوصول، القرب من مراكز الطلب، وإمكانية التوسع.</p>
-            <div class="grid">
-              <div class="full"><label>مميزات الموقع</label><textarea id="locationFeatures"
-                  placeholder="اكتب كل ميزة في سطر منفصل&#10;مثال:&#10;يقع على محور حيوي يخدم شريحة واسعة&#10;سهولة الوصول من الطرق الرئيسية"></textarea>
-              </div>
-            </div>
-          </section>
-
-          <!-- 5. مميزات المشروع -->
-          <section class="section" data-title="مميزات المشروع">
-            <h2>مميزات المشروع</h2>
-            <p class="hint">شريحتان في العرض: (1) مميزات المشروع من منظور تشغيلي واستثماري، (2) فرص الاستثمار ونقاط
-              القوة. تظهر كنقاط بال UIBar. ركز على تنوع الدخل، قابلية التوسع، المرونة في التصميم، وجاذبية التخارج.</p>
-            <div class="grid">
-              <div class="full"><label>مميزات المشروع</label><textarea id="projectFeatures"
-                  placeholder="اكتب كل ميزة في سطر منفصل&#10;مثال:&#10;تنوع مصادر الدخل التأجيري&#10;قابلية التوسع"></textarea>
-              </div>
-              <div class="full"><label>فرص الاستثمار ونقاط القوة</label><textarea id="investmentHighlights"
-                  placeholder="اكتب كل نقطة في سطر منفصل&#10;مثال:&#10;عوائد تشغيلية متوقعة ومستقرة&#10;طلب سوقي قابل للنمو"></textarea>
-              </div>
-            </div>
-          </section>
-
-          <!-- 6. المكونات والمساحات -->
-          <section class="section" data-title="المكونات والمساحات">
-            <h2>مكونات المشروع والمساحات</h2>
-            <p class="hint">شريحة جدول تفصيلي يعرض كل عنصر في المشروع (معارض، سكن، ورش، خدمات) مع مساحته المبنية
-              والتأجيرية والإيجار بالمتر. أسفل الجدول تظهر بطاقات: مساحة الأرض، نسبة البناء، وملاحظة. يتم احتساب
-              الإجماليات تلقائياً.</p>
-            <div class="grid three">
-              <div><label>مساحة الأرض م²</label><input id="landArea" type="number" placeholder="مثال: 20000"></div>
-              <div><label>نسبة البناء %</label><input id="buildingRatio" type="number" placeholder="مثال: 38"></div>
-              <div><label>ملاحظة المساحات</label><input id="areaNote" placeholder="ملاحظات إضافية عن المساحات..."></div>
-            </div><br>
-            <div class="table-wrap">
-              <table id="componentsTable">
-                <thead>
-                  <tr>
-                    <th>العنصر</th>
-                    <th>المساحة المبنية م²</th>
-                    <th>المساحة التأجيرية م²</th>
-                    <th>الإيجار بالمتر/سنة</th>
-                    <th>إزالة</th>
-                  </tr>
-                </thead>
-                <tbody></tbody>
-              </table>
-            </div><br>
-            <button class="btn ghost" onclick="addComponent()">+ إضافة عنصر</button>
-          </section>
-
-          <!-- 7. الربح التشغيلي التأجيري -->
-          <section class="section" data-title="الربح التشغيلي">
-            <h2>افتراضات الربح التشغيلي التأجيري</h2>
-            <p class="hint">شريحة جدول تظهر فيها المدخلات المالية للتشغيل: متوسط إيجار المتر، رسوم الخدمات على
-              المستأجرين، الإيرادات السنوية، المصروف التشغيلي، và إجمالي الربح التأجيري السنوي. هذه الأرقام أساس حساب
-              العائد.</p>
-            <div class="grid three">
-              <div><label>متوسط إيجار المتر</label><input id="avgRent" type="number" placeholder="مثال: 460"></div>
-              <div><label>رسوم الخدمات على المستأجرين %</label><input id="serviceFees" type="number"
-                  placeholder="مثال: 10"></div>
-              <div><label>الإيرادات السنوية</label><input id="annualRevenue" type="number" placeholder="مثال: 10000000">
-              </div>
-              <div><label>المصروف التشغيلي السنوي</label><input id="annualOpex" type="number"
-                  placeholder="مثال: 1300000"></div>
-            </div>
-          </section>
-
-          <!-- 8. التكاليف -->
-          <section class="section" data-title="التكاليف">
-            <h2>افتراضات التكاليف</h2>
-            <p class="hint">شريحة تظهر فيها 3 بطاقات كبيرة: تكلفة الأرض، تكلفة التطوير (البناء والتجهيز)، وإجمالي
-              التكلفة. هذه الأرقام تُحسب تلقائياً وتظهر في الملخص التنفيذي وشرائح المؤشرات.</p>
-            <div class="grid two">
-              <div><label>تكلفة الأرض</label><input id="landCost" type="number" placeholder="مثال: 50000000"></div>
-              <div><label>تكلفة التطوير</label><input id="developmentCost" type="number" placeholder="مثال: 24000000">
-              </div>
-            </div>
-          </section>
-
-          <!-- 9. الأرباح والتخارج -->
-          <section class="section" data-title="الأرباح والتخارج">
-            <h2>الأرباح والتخارج والمؤشرات المالية</h2>
-            <p class="hint">شريحتان في العرض: (1) الأرباح والتخارج - تظهر 4 بطاقات: إجمالي الربح التشغيلي طوال الفترة،
-              قيمة التخارج، معامل الرسملة، وإجمالي الأرباح. (2) المؤشرات المالية - جدول يعرض العائد السنوي، NOI،
-              واسترداد رأس المال.</p>
-            <div class="grid three">
-              <div><label>إجمالي الربح التشغيلي طوال الفترة</label><input id="totalOperatingProfit" type="number"
-                  placeholder="مثال: 26000000"></div>
-              <div><label>قيمة التخارج</label><input id="exitValue" type="number" placeholder="مثال: 116000000"></div>
-              <div><label>معامل الرسملة %</label><input id="capRate" type="number" placeholder="مثال: 7.5"></div>
-              <div><label>العائد السنوي المتوقع</label><input id="annualROI" placeholder="مثال: 15% - 18%"></div>
-              <div><label>نسبة NOI المتوقعة</label><input id="noiRate" placeholder="مثال: 11% - 13%"></div>
-              <div><label>استرداد رأس المال</label><input id="payback" placeholder="مثال: 5 سنوات"></div>
-            </div>
-          </section>
-
-          <!-- 10. الجدول الزمني -->
           <section class="section" data-title="الجدول الزمني">
             <h2>الجدول الزمني للمشروع</h2>
-            <p class="hint">شريحة جدول زمني بصري (Gantt Chart) يعرض مراحل المشروع كأشرطة ملونة موزعة على السنوات
-              والأرباع. أضف كل مرحلة مع سنة البداية والنهاية. يمكنك تغيير ألوان المراحل. المسافة السفلية تظهر معاينة حية
-              للجدول.</p>
+            <p class="hint">يظهر في العرض كتوزيع سنوي وربع سنوي.</p>
             <div class="grid four">
-              <div><label>سنة البداية</label><input id="timelineStartYear" type="number" placeholder="2026"></div>
-              <div><label>عدد السنوات</label><input id="timelineYearsCount" type="number" placeholder="3" min="1"
-                  max="6"></div>
-              <div><label>عنوان الشريحة</label><input id="timelineTitle" placeholder="الجدول الزمني ومراحل المشروع">
-              </div>
-              <div><label>عنوان فرعي</label><input id="timelineSubtitle" placeholder="مراحل التطوير والتنفيذ والتشغيل">
-              </div>
+              <div><label>سنة البداية</label><input id="timelineStartYear" type="number" value="2026"></div>
+              <div><label>عدد السنوات</label><input id="timelineYearsCount" type="number" value="3" min="1" max="6"></div>
+              <div><label>عنوان الشريحة</label><input id="timelineTitle" value="الجدول الزمني ومراحل المشروع"></div>
+              <div><label>عنوان فرعي</label><input id="timelineSubtitle" value="مراحل التطوير والتنفيذ والتشغيل"></div>
             </div><br>
-            <div class="table-wrap">
-              <table id="timelineTable">
-                <thead>
-                  <tr>
-                    <th>المسمى</th>
-                    <th>من سنة</th>
-                    <th>من ربع</th>
-                    <th>إلى سنة</th>
-                    <th>إلى ربع</th>
-                    <th>اللون</th>
-                    <th>إزالة</th>
-                  </tr>
-                </thead>
-                <tbody></tbody>
-              </table>
-            </div><br>
+            <div class="table-wrap"><table id="timelineTable"><thead><tr><th>المسمى</th><th>من سنة</th><th>من ربع</th><th>إلى سنة</th><th>إلى ربع</th><th>اللون</th><th>إزالة</th></tr></thead><tbody></tbody></table></div><br>
             <button class="btn ghost" onclick="addTimelineRow()">+ إضافة مرحلة</button><br><br>
-            <div class="timeline-mini">
-              <div id="miniTimeline"></div>
-            </div>
+            <div class="timeline-mini"><div id="miniTimeline"></div></div>
           </section>
 
-          <!-- 11. المخاطر والتوصيات -->
-          <section class="section" data-title="المخاطر والتوصيات">
-            <h2>المخاطر والافتراضات</h2>
-            <p class="hint">شريحة نقاط يجب التحقق منها في الدراسة التفصيلية. تظهر كنقاط بال UIBar. اكتب كل خطر في سطر
-              منفصل. ركز على: تغيرات الأسعار، الطلب السوقي، التنظيمات، والاعتماد على الدراسة التفصيلية.</p>
+          <section class="section" data-title="شرائح إضافية">
+            <h2>شرائح إضافية اختيارية</h2>
+            <p class="hint">تظهر قبل آخر خطوة، وهي المود بورد.</p>
             <div class="grid">
-              <div class="full"><label>المخاطر والافتراضات</label><textarea id="risks"
-                  placeholder="اكتب كل خطر في سطر منفصل&#10;مثال:&#10;تغيرات أسعار مواد البناء&#10;تغير الطلب السوقي"></textarea>
-              </div>
+              <div class="full"><label>المخاطر والافتراضات - كل نقطة في سطر</label><textarea id="risks">تغيرات أسعار مواد البناء وتكاليف التطوير
+تغير الطلب السوقي أو معدلات الإشغال
+تغيرات تنظيمية أو اشتراطات بلدية
+اعتماد النتائج النهائية على الدراسة التفصيلية والتصاميم المعتمدة</textarea></div>
+              <div class="full"><label>التوصية الاستثمارية</label><textarea id="recommendation">يمثل المشروع فرصة استثمارية قابلة للدراسة التفصيلية، مع مؤشرات أولية إيجابية مبنية على تنوع عناصر المشروع وإمكانية تحقيق دخل تشغيلي مستقر وقيمة تخارج مجدية.</textarea></div>
+              <div><label>اسم معد العرض</label><input id="preparedBy" value="منافع الاقتصادية للعقار"></div>
+              <div><label>بيانات التواصل</label><input id="contactInfo" value="info@manafe.com | www.manafe.com"></div>
             </div>
           </section>
 
-          <!-- 12. المود بورد + مراجعة AI -->
           <section class="section" data-title="المود بورد AI">
-            <h2>المود بورد بالذكاء الاصطناعي + مراجعة</h2>
-            <p class="hint">شريحتان أخيرتان: (1) المود بورد - 4 صور AI مرتبة في شبكة 2×2 مبنية على وصفك ونوع اللقطة. (2)
-              شريحة شكراً تظهر فيها شعار الشركة + اسم المشروع + بيانات التواصل. أسفل ذلك صندوق مراجعة AI للتعديل على
-              البيانات قبل التعميد.</p>
+            <h2>المود بورد بالذكاء الاصطناعي</h2>
+            <p class="hint">آخر خطوة: يولد 4 صور فقط بناء على مدخل العميل. يمكن رفع صور مشابهة كمرجع، وكتابة اسم المبنى ليظهر على التصميم.</p>
             <div class="grid">
-              <div><label>اسم المبنى الذي سيظهر على الواجهة</label><input id="buildingName" placeholder="مثال: MANAFE">
-              </div>
-              <div><label>نوع اللقطة</label><select id="aiImageStyle">
-                  <option value="">اختر نوع اللقطة</option>
-                  <option>تصميم معماري واقعي فاخر</option>
-                  <option>مودرن بسيط</option>
-                  <option>تجاري حضري</option>
-                  <option>صناعي / لوجستي</option>
-                  <option>ضيافة وترفيه</option>
-                </select></div>
-              <div class="full"><label>وصف الصور المطلوب توليدها بالذكاء الاصطناعي</label><textarea id="aiImagePrompt"
-                  placeholder="اكتب وصفاً تفصيلياً للمبنى المطلوب توليده..."></textarea></div>
+              <div><label>اسم المبنى الذي سيظهر على الواجهة</label><input id="buildingName" value="MANAFE"></div>
+              <div><label>نوع اللقطة</label><select id="aiImageStyle"><option>تصميم معماري واقعي فاخر</option><option>مودرن بسيط</option><option>تجاري حضري</option><option>صناعي / لوجستي</option><option>ضيافة وترفيه</option></select></div>
+              <div class="full"><label>وصف الصور المطلوب توليدها بالذكاء الاصطناعي</label><textarea id="aiImagePrompt">مجمّع تجاري إداري حديث في جدة، واجهات زجاجية، لمسات برونزية، نخيل، مساحات خارجية، إضاءة غروب، تصميم فاخر وواقعي، مع ظهور اسم المبنى على الواجهة.</textarea></div>
               <div><label>صورة مشابهة 1</label><input id="refImage1" type="file" accept="image/*"></div>
               <div><label>صورة مشابهة 2</label><input id="refImage2" type="file" accept="image/*"></div>
+            </div><br>
+            <button class="btn primary" onclick="generateAIImages()">توليد 4 صور AI للمود بورد</button>
+            <button class="btn ghost" onclick="generateImagePromptsOnly()">توليد Prompts فقط</button>
+            <br><br>
+            <div id="aiImages" class="ai-grid"><div class="ai-img">AI Image 1</div><div class="ai-img">AI Image 2</div><div class="ai-img">AI Image 3</div><div class="ai-img">AI Image 4</div></div>
+            <div id="promptBox" class="prompt-box hidden"></div>
+            <p class="small muted">هذه نسخة Frontend Prototype. التوليد الحقيقي للصور يحتاج Backend/API عند المسار <b>/api/generate-images</b> أو ربطه بخدمة صور مثل OpenAI Images.</p>
+          </section>
+
+          <section class="section" data-title="مراجعة AI">
+            <h2>مراجعة وتعديل الملف قبل التعميد</h2>
+            <p class="hint">بعد توليد الملف، اطلب من AI تعديل النصوص أو إضافة نقاط ثم أعد توليد الملف قبل التعميد والتحميل.</p>
+            <div class="chatbox">
+              <div id="chatLog" class="chatlog"><div class="msg ai">بعد توليد العرض، اكتب طلبك هنا مثل: "اجعل الملخص التنفيذي أكثر فخامة" أو "أضف ميزة عن قرب المشروع من المطار".</div></div>
+              <div class="grid">
+                <div class="full"><textarea id="aiEditRequest" placeholder="اكتب طلب التعديل على الملف هنا..."></textarea></div>
+                <div><button class="btn primary" onclick="applyAIEdit()">تطبيق التعديل على البيانات</button></div>
+                <div><button class="btn ghost" onclick="generatePptx()">إعادة توليد الملف بعد التعديل</button></div>
+              </div>
             </div>
           </section>
         </main>
@@ -2782,7 +2676,57 @@
 
         function initNav() { const nav = document.getElementById('nav'); nav.innerHTML = ''; const secs = [...document.querySelectorAll('#designerPage .section')]; secs.forEach((sec, i) => { const b = document.createElement('button'); b.innerHTML = `<span>${sec.dataset.title}</span><span>${i + 1}</span>`; b.onclick = () => showSection(i); if (i === 0) b.classList.add('active'); nav.appendChild(b); sec.classList.toggle('active', i === 0) }) }
         function showSection(i) { const secs = [...document.querySelectorAll('#designerPage .section')]; secs.forEach(s => s.classList.remove('active')); document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active')); secs[i].classList.add('active'); document.querySelectorAll('.nav button')[i].classList.add('active'); calculate() }
-        function resetForm() { document.querySelector('#componentsTable tbody').innerHTML = ''; document.querySelector('#timelineTable tbody').innerHTML = ''; document.querySelectorAll('#designerPage input[type="number"],#designerPage input[type="text"],#designerPage textarea').forEach(el => el.value = ''); document.querySelectorAll('#designerPage select').forEach(el => el.selectedIndex = 0); aiGeneratedImages = []; renderAIImages(); renderMiniTimeline(); calculate(); mainImageData = null; geSlidesData = []; }
+        function resetForm() {
+          document.querySelector('#componentsTable tbody').innerHTML = '';
+          [{name:'معارض تجارية',built:1780,leasable:1780,rent:909},{name:'سكن عمال',built:4725,leasable:3900,rent:273},{name:'ورش / مستودعات',built:5900,leasable:14100,rent:455},{name:'خدمات ومرافق',built:110,leasable:0,rent:0}].forEach(addComponent);
+          document.querySelector('#timelineTable tbody').innerHTML = '';
+          [{name:'مرحلة الدراسات والتصاميم',startYear:2026,startQuarter:1,endYear:2026,endQuarter:2,color:'#A9847A'},{name:'مرحلة البناء',startYear:2026,startQuarter:3,endYear:2027,endQuarter:4,color:'#A9847A'},{name:'تسويق المشروع',startYear:2026,startQuarter:2,endYear:2027,endQuarter:4,color:'#8D6E63'},{name:'بدء التشغيل',startYear:2028,startQuarter:1,endYear:2028,endQuarter:3,color:'#C9B08B'}].forEach(addTimelineRow);
+
+          // Set default values matching V3 index.html
+          document.getElementById('projectName').value = "مشروع استثماري جديد";
+          document.getElementById('projectType').value = "تجاري";
+          document.getElementById('city').value = "جدة";
+          document.getElementById('location').value = "طريق رئيسي / حي استراتيجي";
+          document.getElementById('idea').value = "تطوير مشروع استثماري متعدد الاستخدامات يضم عناصر تشغيلية وتأجيرية مصممة لتحقيق عوائد مستقرة وفرصة تخارج مجدية.";
+          document.getElementById('structure').value = "1 سنة تطوير + 4 سنوات تشغيل + تخارج";
+          document.getElementById('developer').value = "منافع الاقتصادية للعقار";
+          document.getElementById('locationFeatures').value = "يقع على محور حيوي يخدم شريحة واسعة من العملاء\nسهولة الوصول من الطرق الرئيسية\nقربه من مناطق الطلب أو الكثافة السكانية/التجارية\nموقع مناسب للتوسع والتشغيل المستقبلي";
+          document.getElementById('projectFeatures').value = "تنوع مصادر الدخل التأجيري\nقابلية التوسع وإضافة أنشطة مستقبلية\nتصميم مرن يناسب أكثر من فئة مستأجرين\nفرصة تخارج جذابة بناءً على الدخل التشغيلي";
+          document.getElementById('investmentHighlights').value = "عوائد تشغيلية متوقعة ومستقرة\nطلب سوقي قابل للنمو\nإمكانية تحسين العائد عبر الإدارة والتشغيل\nأصل عقاري قابل لإعادة التقييم عند التخارج";
+          document.getElementById('landArea').value = "20583.93";
+          document.getElementById('buildingRatio').value = "38";
+          document.getElementById('areaNote').value = "تشمل المساحات التأجيرية المساحات الخارجية الخاصة عند توفرها.";
+          document.getElementById('avgRent').value = "460";
+          document.getElementById('serviceFees').value = "10";
+          document.getElementById('annualRevenue').value = "10000000";
+          document.getElementById('annualOpex').value = "1300000";
+          document.getElementById('landCost').value = "50372236";
+          document.getElementById('developmentCost').value = "24208959";
+          document.getElementById('totalOperatingProfit').value = "26100000";
+          document.getElementById('exitValue').value = "116000000";
+          document.getElementById('capRate').value = "7.5";
+          document.getElementById('annualROI').value = "15% - 18%";
+          document.getElementById('noiRate').value = "11% - 13%";
+          document.getElementById('payback').value = "5 سنوات";
+          document.getElementById('timelineStartYear').value = "2026";
+          document.getElementById('timelineYearsCount').value = "3";
+          document.getElementById('timelineTitle').value = "الجدول الزمني ومراحل المشروع";
+          document.getElementById('timelineSubtitle').value = "مراحل التطوير والتنفيذ والتشغيل";
+          document.getElementById('risks').value = "تغيرات أسعار مواد البناء وتكاليف التطوير\nتغير الطلب السوقي أو معدلات الإشغال\nتغيرات تنظيمية أو اشتراطات بلدية\nاعتماد النتائج النهائية على الدراسة التفسيطية والتصاميم المعتمدة";
+          document.getElementById('recommendation').value = "يمثل المشروع فرصة استثمارية قابلة للدراسة التفصيلية، مع مؤشرات أولية إيجابية مبنية على تنوع عناصر المشروع وإمكانية تحقيق دخل تشغيلي مستقر وقيمة تخارج مجدية.";
+          document.getElementById('preparedBy').value = "منافع الاقتصادية للعقار";
+          document.getElementById('contactInfo').value = "info@manafe.com | www.manafe.com";
+          document.getElementById('buildingName').value = "MANAFE";
+          document.getElementById('aiImageStyle').value = "تصميم معماري واقعي فاخر";
+          document.getElementById('aiImagePrompt').value = "مجمّع تجاري إداري حديث في جدة، واجهات زجاجية، لمسات برونزية، نخيل، مساحات خارجية، إضاءة غروب، تصميم فاخر وواقعي، مع ظهور اسم المبنى على الواجهة.";
+
+          aiGeneratedImages = [];
+          renderAIImages();
+          renderMiniTimeline();
+          calculate();
+          mainImageData = null;
+          geSlidesData = [];
+        }
         function addComponent(d = {}) { const tb = document.querySelector('#componentsTable tbody'), tr = document.createElement('tr'); tr.innerHTML = `<td><input value="${d.name || ''}" placeholder="مثال: معارض تجارية"></td><td><input type="number" value="${d.built || 0}"></td><td><input type="number" value="${d.leasable || 0}"></td><td><input type="number" value="${d.rent || 0}"></td><td><button class="btn danger small" onclick="this.closest('tr').remove();calculate()">حذف</button></td>`; tb.appendChild(tr); tr.querySelectorAll('input').forEach(x => x.addEventListener('input', calculate)); calculate() }
         function addTimelineRow(d = {}) { const tb = document.querySelector('#timelineTable tbody'), y = num('timelineStartYear') || 2026, tr = document.createElement('tr'); tr.innerHTML = `<td><input value="${d.name || ''}" placeholder="مثال: مرحلة البناء"></td><td><input type="number" value="${d.startYear || y}"></td><td><select>${quarterLabels.map((q, i) => `<option value="${i + 1}" ${Number(d.startQuarter || 1) === i + 1 ? 'selected' : ''}>${q}</option>`).join('')}</select></td><td><input type="number" value="${d.endYear || y}"></td><td><select>${quarterLabels.map((q, i) => `<option value="${i + 1}" ${Number(d.endQuarter || 2) === i + 1 ? 'selected' : ''}>${q}</option>`).join('')}</select></td><td><select>${timelineColors.map(c => `<option value="${c}" ${d.color === c ? 'selected' : ''}>${c}</option>`).join('')}</select></td><td><button class="btn danger small" onclick="this.closest('tr').remove();renderMiniTimeline()">حذف</button></td>`; tb.appendChild(tr); tr.querySelectorAll('input,select').forEach(x => x.addEventListener('input', renderMiniTimeline)); renderMiniTimeline() }
         function components() { return [...document.querySelectorAll('#componentsTable tbody tr')].map(tr => { const i = tr.querySelectorAll('input'); return { name: i[0].value, built: Number(i[1].value || 0), leasable: Number(i[2].value || 0), rent: Number(i[3].value || 0) } }) }
