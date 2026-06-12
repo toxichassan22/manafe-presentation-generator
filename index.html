@@ -2217,6 +2217,10 @@
         <aside class="sidebar">
           <div class="nav" id="nav"></div>
           <div class="actions">
+            <label style="display:flex; align-items:center; gap:8px; font-size:12px; margin-bottom:12px; color:var(--green); font-weight:600; cursor:pointer; background:#e8f5e9; padding:8px 12px; border-radius:10px; border:1px solid #c8e6c9; justify-content:center;">
+              <input type="checkbox" id="mockModeCheck" style="cursor:pointer; width:16px; height:16px; margin:0;" />
+              <span>وضع التجربة المجاني (بدون رصيد)</span>
+            </label>
             <button class="btn ghost" onclick="saveDraft()">حفظ كمسودة</button>
             <button class="btn primary" onclick="generateOutline()">إنشاء الهيكل</button>
             <button class="btn danger" onclick="deleteCurrentProject()">حذف المشروع</button>
@@ -2393,7 +2397,7 @@
         <div style="background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px">
           <h3 style="margin:0 0 8px;color:var(--p)">وصف الصورة الأساسية (الغلاف)</h3>
           <p class="hint" style="margin:0 0 14px">اكتب وصفاً تفصيلياً للمبنى المطلوب توليده. هذه الصورة هي الغلاف
-            الرئيسي للعرض وتظهر في أول شريحة. باقي صور المود بورد (3 أو 4 صور) سيتم توليدها تلقائياً بواسطة GLM5.1 عند
+            الرئيسي للعرض وتظهر في أول شريحة. باقي صور العرض سيتم توليدها وتوزيعها تلقائياً على الشرائح بواسطة GLM5.1 عند
             إنشاء العرض.</p>
           <textarea id="imageDescription"
             style="min-height:140px;width:100%;border:1px solid var(--line);border-radius:13px;padding:12px;font-size:14px;resize:vertical;font-family:inherit"
@@ -2409,8 +2413,8 @@
 
           <div
             style="margin-top:16px;padding:14px;border-radius:12px;background:#f0f7ff;border:1px solid #c8ddf0;font-size:13px;color:#3a6ea5;line-height:1.7">
-            <strong style="color:#2c5f8a">💡 ملاحظة:</strong> صور المود بورد الإضافية (3 أو 4 صور) يتم توليدها تلقائياً
-            بواسطة GLM5.1 عند إنشاء ملف PowerPoint. العميل لا يتحكم في هذه الصور — فقط الصورة الأساسية (الغلاف) هي التي
+            <strong style="color:#2c5f8a">💡 ملاحظة:</strong> الصور الإضافية للشرائح يتم توليدها تلقائياً
+            بواسطة GLM5.1 عند إنشاء العرض. العميل لا يتحكم في هذه الصور — فقط الصورة الأساسية (الغلاف) هي التي
             تتحكم فيها أنت.
           </div>
         </div>
@@ -2685,6 +2689,7 @@
         function components() { return [...document.querySelectorAll('#componentsTable tbody tr')].map(tr => { const i = tr.querySelectorAll('input'); return { name: i[0].value, built: Number(i[1].value || 0), leasable: Number(i[2].value || 0), rent: Number(i[3].value || 0) } }) }
         function timelineRows() { return [...document.querySelectorAll('#timelineTable tbody tr')].map(tr => { const i = tr.querySelectorAll('input,select'); return { name: i[0].value, startYear: Number(i[1].value || 0), startQuarter: Number(i[2].value || 1), endYear: Number(i[3].value || 0), endQuarter: Number(i[4].value || 1), color: i[5].value || '#A9847A' } }).filter(x => x.name) }
         function collectData() { return { projectName: val('projectName'), projectType: val('projectType'), city: val('city'), location: val('location'), googleMapsLink: val('googleMapsLink'), idea: val('idea'), structure: val('structure'), developer: val('developer'), locationFeatures: lines('locationFeatures'), projectFeatures: lines('projectFeatures'), investmentHighlights: lines('investmentHighlights'), landArea: num('landArea'), buildingRatio: num('buildingRatio'), areaNote: val('areaNote'), components: components(), avgRent: num('avgRent'), serviceFees: num('serviceFees'), annualRevenue: num('annualRevenue'), annualOpex: num('annualOpex'), landCost: num('landCost'), developmentCost: num('developmentCost'), totalOperatingProfit: num('totalOperatingProfit'), exitValue: num('exitValue'), capRate: num('capRate'), annualROI: val('annualROI'), noiRate: val('noiRate'), payback: val('payback'), timelineStartYear: num('timelineStartYear'), timelineYearsCount: num('timelineYearsCount'), timelineTitle: val('timelineTitle'), timelineSubtitle: val('timelineSubtitle'), timelineRows: timelineRows(), risks: lines('risks'), recommendation: val('recommendation'), preparedBy: val('preparedBy'), contactInfo: val('contactInfo'), buildingName: val('buildingName'), aiImageStyle: val('aiImageStyle'), aiImagePrompt: val('aiImagePrompt'), aiGeneratedImages: aiGeneratedImages, mainImageData: mainImageData, slides: geSlidesData } }
+        function isMockMode() { return document.getElementById('mockModeCheck')?.checked || false; }
         function loadDataToForm(d) { Object.keys(d).forEach(k => { const el = document.getElementById(k); if (el && !Array.isArray(d[k]) && typeof d[k] !== 'object') el.value = d[k] });['locationFeatures', 'projectFeatures', 'investmentHighlights', 'risks'].forEach(k => { if (d[k]) document.getElementById(k).value = d[k].join('\n') }); if (d.components) { document.querySelector('#componentsTable tbody').innerHTML = ''; d.components.forEach(addComponent) } if (d.timelineRows) { document.querySelector('#timelineTable tbody').innerHTML = ''; d.timelineRows.forEach(addTimelineRow) } aiGeneratedImages = d.aiGeneratedImages || []; mainImageData = d.mainImageData || null; geSlidesData = d.slides || []; renderAIImages(); calculate(); renderMiniTimeline() }
         function calculate() { const comps = components(), built = comps.reduce((a, x) => a + x.built, 0), leasable = comps.reduce((a, x) => a + x.leasable, 0), totalCost = num('landCost') + num('developmentCost'), totalProfit = num('totalOperatingProfit') + num('exitValue'); document.getElementById('mBuilt').textContent = money(built) + ' م²'; document.getElementById('mLeasable').textContent = money(leasable) + ' م²'; document.getElementById('mTotalCost').textContent = money(totalCost) + ' ريال'; document.getElementById('mTotalProfit').textContent = money(totalProfit) + ' ريال' } document.addEventListener('input', e => { if (e.target.closest('#designerPage')) calculate() });
         function quarterIndex(y, q) { return y * 4 + (q - 1) } function renderMiniTimeline() { const c = document.getElementById('miniTimeline'); if (!c) return; const start = num('timelineStartYear') || 2026, years = Math.max(1, Math.min(6, num('timelineYearsCount') || 3)), rows = timelineRows(), total = years * 4; let html = '<div class="mini-grid"><div class="mini-head-year"></div>'; for (let y = 0; y < years; y++)html += `<div class="mini-head-year" style="grid-column:span 4">${start + y}</div>`; html += '<div class="mini-head-q"></div>'; for (let y = 0; y < years; y++)quarterLabels.forEach(q => html += `<div class="mini-head-q">${q}</div>`); rows.forEach(r => { html += `<div class="mini-cell mini-label">${r.name}</div>`; for (let q = 0; q < total; q++)html += '<div class="mini-track"></div>' }); html += '</div>'; c.innerHTML = html; const grid = c.querySelector('.mini-grid'); rows.forEach((r, idx) => { const st = quarterIndex(r.startYear, r.startQuarter) - quarterIndex(start, 1), en = quarterIndex(r.endYear, r.endQuarter) - quarterIndex(start, 1); if (en < 0 || st > total - 1) return; const ss = Math.max(0, st), ee = Math.min(total - 1, en), bar = document.createElement('div'); bar.className = 'mini-bar'; bar.style.top = (80 + idx * 44 + 8) + 'px'; bar.style.left = (150 + ss * 80 + 4) + 'px'; bar.style.width = (((ee - ss + 1) * 80) - 8) + 'px'; bar.style.background = r.color; bar.textContent = r.name; grid.appendChild(bar) }) }
@@ -2811,7 +2816,7 @@
             var titlesRes = await fetch('/api/generate-titles', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ projectData: collectData() })
+              body: JSON.stringify({ projectData: collectData(), mock: isMockMode() })
             });
             var titlesData = await titlesRes.json();
             if (titlesData.cache_analytics) updateCacheDebugger(titlesData.cache_analytics);
@@ -2844,7 +2849,7 @@
               var bulletsRes = await fetch('/api/generate-bullets', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ projectData: collectData(), slides: batch })
+                body: JSON.stringify({ projectData: collectData(), slides: batch, mock: isMockMode() })
               });
               var bulletsData = await bulletsRes.json();
               if (bulletsData.cache_analytics) updateCacheDebugger(bulletsData.cache_analytics);
@@ -3015,7 +3020,8 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                   projectData: collectData(),
-                  outline: outlineData
+                  outline: outlineData,
+                  mock: isMockMode()
                 })
               });
               var data = await res.json();
@@ -3114,7 +3120,7 @@
             const res = await fetch('/api/generate-main-image', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ prompt: desc, referenceImage: mainImageData })
+              body: JSON.stringify({ prompt: desc, referenceImage: mainImageData, mock: isMockMode() })
             });
             const data = await res.json();
             if (data.success && data.image) {
@@ -3179,16 +3185,7 @@
         let geCurrentSlide = 0;
         let geSlidesData = [];
         async function generateFromImagePage() {
-          showLoader('جاري توليد صور المود بورد بالذكاء الاصطناعي...', 'نقوم الآن بتوليد صور المود بورد الإضافية بالاعتماد على صورة الغلاف لضمان التناسق البصري للهوية المعمارية للمشروع. يرجى الانتظار...');
-          try {
-            await generateAIImages();
-            saveDraft(false);
-          } catch (e) {
-            console.error(e);
-          } finally {
-            hideLoader();
-            showGenEdit();
-          }
+          showGenEdit();
         }
         function showGenEdit() {
           show('genEditPage');

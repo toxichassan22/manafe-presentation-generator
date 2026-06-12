@@ -181,6 +181,16 @@ function computeCacheAnalytics(responseJson, fallbackSessionId) {
   };
 }
 
+function getMockImageUri() {
+  try {
+    var p = path.join(__dirname, 'mock-architecture.png');
+    if (fs.existsSync(p)) {
+      var data = fs.readFileSync(p);
+      return 'data:image/png;base64,' + data.toString('base64');
+    }
+  } catch(e) {}
+  return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNmYGD4DwAEhQGDc2a8fAAAAABJRU5ErkJggg==';
+}
 
 // ═══════════════════════════════════════════════════════════════
 //  EXISTING ENDPOINTS
@@ -309,6 +319,11 @@ app.post('/api/generate-main-image', async function(req, res) {
     return res.status(400).json({ error: 'Prompt is required' });
   }
 
+  if (req.body.mock) {
+    console.log('  [Mock Mode] Returning mock cover image');
+    return res.json({ success: true, image: getMockImageUri() });
+  }
+
   console.log('\n[Image] Generating main cover image...');
   console.log('  Prompt: ' + prompt.substring(0, 100) + '...');
 
@@ -348,6 +363,13 @@ app.post('/api/generate-images', async function(req, res) {
   var referenceImage = req.body.referenceImage;
   if (!prompts || !Array.isArray(prompts) || prompts.length === 0) {
     return res.status(400).json({ error: 'Prompts array is required' });
+  }
+
+  if (req.body.mock) {
+    console.log('  [Mock Mode] Returning mock variant images');
+    var mockImg = getMockImageUri();
+    var images = prompts.map(function(p) { return { url: mockImg, prompt: p }; });
+    return res.json({ success: true, images: images });
   }
 
   console.log('\n[Images] Generating ' + prompts.length + ' mood board images...');
@@ -681,6 +703,11 @@ app.post('/api/generate-slide-image', async function(req, res) {
     return res.status(400).json({ error: 'Prompt is required' });
   }
 
+  if (req.body.mock) {
+    console.log('  [Mock Mode] Returning mock slide image');
+    return res.json({ success: true, image: getMockImageUri() });
+  }
+
   console.log('\n[SlideImage] Generating slide image...');
 
   try {
@@ -764,6 +791,31 @@ app.post('/api/generate-outline', async function(req, res) {
 // ─────────────────────────────────────────────
 app.post('/api/generate-titles', async function(req, res) {
   var projectData = req.body.projectData;
+  if (req.body.mock) {
+    console.log('  [Mock Mode] Returning mock titles');
+    var mockTitles = [
+      "غلاف المشروع",
+      "الملخص التنفيذي",
+      "فكرة المشروع والهيكلة",
+      "مميزات الموقع",
+      "مميزات المشروع",
+      "مكونات المشروع والمساحات",
+      "افتراضات الربح التشغيلي التأجيري",
+      "افتراضات التكاليف",
+      "الأرباح والتخارج",
+      "المؤشرات المالية المتوقعة",
+      "الجدول الزمني ومراحل المشروع",
+      "فرص الاستثمار ونقاط القوة",
+      "المخاطر والافتراضات",
+      "الختام وبيانات التواصل"
+    ];
+    return res.json({
+      success: true,
+      titles: mockTitles,
+      cache_analytics: { status: "MOCKED", cached_tokens: 0, total_tokens: 0 }
+    });
+  }
+
   console.log('\n[Titles] Generating slide titles via GLM 5.1...');
   var startTime = Date.now();
 
@@ -810,6 +862,40 @@ app.post('/api/generate-titles', async function(req, res) {
 app.post('/api/generate-bullets', async function(req, res) {
   var projectData = req.body.projectData;
   var slides = req.body.slides || []; // [{index, title}, ...]
+
+  if (req.body.mock) {
+    console.log('  [Mock Mode] Returning mock bullets for ' + slides.length + ' slides');
+    var mockResults = slides.map(function(s) {
+      var bullets = [];
+      if (s.title === "مميزات الموقع") {
+        bullets = [
+          "موقع استراتيجي وحيوي لتسهيل الوصول والتنقل.",
+          "قريب من الشوارع الرئيسية ومحاور الحركة بجدة.",
+          "رابط الموقع الجغرافي للمشروع متوفر مباشرة عبر قوقل ماب."
+        ];
+        if (projectData && projectData.googleMapsLink) {
+          bullets.push("رابط قوقل ماب: " + projectData.googleMapsLink);
+        }
+      } else if (s.title === "غلاف المشروع") {
+        bullets = [
+          "مشروع استثماري واعد.",
+          "تم الإعداد بواسطة منافع الاقتصادية."
+        ];
+      } else {
+        bullets = [
+          "نقطة تجريبية أولى توضح الأهمية التشغيلية للمشروع.",
+          "نقطة تجريبية ثانية تدعم نموذج العمل والعوائد الاستثمارية.",
+          "نقطة تجريبية ثالثة لتقييم المخاطر والمؤشرات المالية للموقع."
+        ];
+      }
+      return { index: s.index, title: s.title, bullets: bullets };
+    });
+    return res.json({
+      success: true,
+      slides: mockResults,
+      cache_analytics: { status: "MOCKED", cached_tokens: 0, total_tokens: 0 }
+    });
+  }
 
   console.log('\n[Bullets] Generating bullets for ' + slides.length + ' slides...');
 
@@ -906,6 +992,49 @@ app.post('/api/generate-bullets', async function(req, res) {
 app.post('/api/generate-content', async function(req, res) {
   var projectData = req.body.projectData;
   var outline = req.body.outline;
+
+  if (req.body.mock) {
+    console.log('  [Mock Mode] Returning mock HTML content for slides');
+    var mockSlides = outline.map(function(s, idx) {
+      var html = '<div class="ge-slide-title">' + s.title + '</div>';
+      html += '<div class="ge-slide-subtitle">تفاصيل وبنية الشريحة الاستثمارية ' + (idx + 1) + '</div>';
+      
+      if (s.title === "مميزات الموقع" && projectData && projectData.googleMapsLink) {
+        html += '<div class="ge-slide-body">';
+        html += '<ul>';
+        if (s.bullets && s.bullets.length > 0) {
+          s.bullets.forEach(function(b) {
+            html += '<li>' + b + '</li>';
+          });
+        }
+        html += '</ul>';
+        html += '<div style="margin-top: 15px;">';
+        html += '<a href="' + projectData.googleMapsLink + '" target="_blank" class="ge-maps-btn" style="display:inline-block; padding:10px 20px; background:#7A0C0C; color:#fff; text-decoration:none; border-radius:8px; font-weight:bold;">📍 فتح موقع المشروع على Google Maps</a>';
+        html += '</div>';
+        html += '</div>';
+      } else {
+        html += '<div class="ge-slide-body">';
+        html += '<ul>';
+        if (s.bullets && s.bullets.length > 0) {
+          s.bullets.forEach(function(b) {
+            html += '<li>' + b + '</li>';
+          });
+        } else {
+          html += '<li>نقطة استثمارية أولى توضح الرؤية والأهداف.</li>';
+          html += '<li>نقطة استثمارية ثانية لتحليل المؤشرات والعوائد.</li>';
+          html += '<li>نقطة استثمارية ثالثة لتقييم فرص النمو المتاحة.</li>';
+        }
+        html += '</ul>';
+        html += '</div>';
+      }
+      return { title: s.title, content: html };
+    });
+    return res.json({
+      success: true,
+      slides: mockSlides,
+      cache_analytics: { status: "MOCKED", cached_tokens: 0, total_tokens: 0 }
+    });
+  }
 
   console.log('\n[Content] Generating full slide content via GLM 5.1...');
 
