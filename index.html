@@ -2229,13 +2229,13 @@
             <h2>بيانات المشروع الأساسية</h2>
             <p class="hint">تظهر في الغلاف والتعريف والملخص.</p>
             <div class="grid">
-              <div><label>اسم المشروع</label><input id="projectName" value="مشروع استثماري جديد"></div>
+              <div><label>اسم المشروع</label><input id="projectName" value=""></div>
               <div><label>نوع المشروع</label><select id="projectType"><option>تجاري</option><option>سكني</option><option>لوجستي</option><option>صناعي</option><option>ضيافة</option><option>مكاتب إدارية</option><option>مشروع مختلط</option><option>ترفيهي</option></select></div>
-              <div><label>المدينة</label><input id="city" value="جدة"></div>
-              <div><label>الموقع التفصيلي</label><input id="location" value="طريق رئيسي / حي استراتيجي"></div>
-              <div class="full"><label>فكرة المشروع</label><textarea id="idea">تطوير مشروع استثماري متعدد الاستخدامات يضم عناصر تشغيلية وتأجيرية مصممة لتحقيق عوائد مستقرة وفرصة تخارج مجدية.</textarea></div>
-              <div><label>هيكلة المشروع</label><input id="structure" value="1 سنة تطوير + 4 سنوات تشغيل + تخارج"></div>
-              <div><label>اسم الجهة / المطور</label><input id="developer" value="منافع الاقتصادية للعقار"></div>
+              <div><label>المدينة</label><input id="city" value=""></div>
+              <div><label>الموقع التفصيلي</label><input id="location" value=""></div>
+              <div class="full"><label>فكرة المشروع</label><textarea id="idea"></textarea></div>
+              <div><label>هيكلة المشروع</label><input id="structure" value=""></div>
+              <div><label>اسم الجهة / المطور</label><input id="developer" value=""></div>
               <div><label>شعار إضافي للمشروع، اختياري</label><input id="logoFile" type="file" accept="image/*"></div>
               <div><label>الصورة الرئيسية للمشروع</label><input id="mainImageFile" type="file" accept="image/*"></div>
             </div>
@@ -2245,18 +2245,10 @@
             <h2>مميزات الموقع والمشروع</h2>
             <p class="hint">نقاط تسويقية واستثمارية تظهر في شرائح منفصلة.</p>
             <div class="grid">
-              <div class="full"><label>مميزات الموقع - كل نقطة في سطر</label><textarea id="locationFeatures">يقع على محور حيوي يخدم شريحة واسعة من العملاء
-سهولة الوصول من الطرق الرئيسية
-قربه من مناطق الطلب أو الكثافة السكانية/التجارية
-موقع مناسب للتوسع والتشغيل المستقبلي</textarea></div>
-              <div class="full"><label>مميزات المشروع - كل نقطة في سطر</label><textarea id="projectFeatures">تنوع مصادر الدخل التأجيري
-قابلية التوسع وإضافة أنشطة مستقبلية
-تصميم مرن يناسب أكثر من فئة مستأجرين
-فرصة تخارج جذابة بناءً على الدخل التشغيلي</textarea></div>
-              <div class="full"><label>فرص الاستثمار ونقاط القوة - كل نقطة في سطر</label><textarea id="investmentHighlights">عوائد تشغيلية متوقعة ومستقرة
-طلب سوقي قابل للنمو
-إمكانية تحسين العائد عبر الإدارة والتشغيل
-أصل عقاري قابل لإعادة التقييم عند التخارج</textarea></div>
+              <div class="full"><label>رابط الموقع على قوقل ماب (Google Maps Link)</label><input id="googleMapsLink" type="text" placeholder="مثال: https://maps.app.goo.gl/..."></div>
+              <div class="full"><label>مميزات الموقع - كل نقطة في سطر</label><textarea id="locationFeatures"></textarea></div>
+              <div class="full"><label>مميزات المشروع - كل نقطة في سطر</label><textarea id="projectFeatures"></textarea></div>
+              <div class="full"><label>فرص الاستثمار ونقاط القوة - كل نقطة في سطر</label><textarea id="investmentHighlights"></textarea></div>
             </div>
           </section>
 
@@ -2264,9 +2256,9 @@
             <h2>مكونات المشروع والمساحات</h2>
             <p class="hint">يتم احتساب إجمالي المساحة المبنية والتأجيرية.</p>
             <div class="grid three">
-              <div><label>مساحة الأرض م²</label><input id="landArea" type="number" value="20583.93"></div>
-              <div><label>نسبة البناء %</label><input id="buildingRatio" type="number" value="38"></div>
-              <div><label>ملاحظة المساحات</label><input id="areaNote" value="تشمل المساحات التأجيرية المساحات الخارجية الخاصة عند توفرها."></div>
+              <div><label>مساحة الأرض م²</label><input id="landArea" type="number" value=""></div>
+              <div><label>نسبة البناء %</label><input id="buildingRatio" type="number" value=""></div>
+              <div><label>ملاحظة المساحات</label><input id="areaNote" value=""></div>
             </div><br>
             <div class="table-wrap"><table id="componentsTable"><thead><tr><th>العنصر</th><th>المساحة المبنية م²</th><th>المساحة التأجيرية م²</th><th>الإيجار بالمتر/سنة</th><th>إزالة</th></tr></thead><tbody></tbody></table></div><br>
             <button class="btn ghost" onclick="addComponent()">+ إضافة عنصر</button>
@@ -2276,18 +2268,18 @@
             <h2>الافتراضات المالية والتشغيلية</h2>
             <p class="hint">أهم مدخلات الدراسة الأولية.</p>
             <div class="grid three">
-              <div><label>متوسط إيجار المتر</label><input id="avgRent" type="number" value="460"></div>
-              <div><label>رسوم الخدمات على المستأجرين %</label><input id="serviceFees" type="number" value="10"></div>
-              <div><label>الإيرادات السنوية</label><input id="annualRevenue" type="number" value="10000000"></div>
-              <div><label>المصروف التشغيلي السنوي</label><input id="annualOpex" type="number" value="1300000"></div>
-              <div><label>تكلفة الأرض</label><input id="landCost" type="number" value="50372236"></div>
-              <div><label>تكلفة التطوير</label><input id="developmentCost" type="number" value="24208959"></div>
-              <div><label>إجمالي الربح التشغيلي طوال الفترة</label><input id="totalOperatingProfit" type="number" value="26100000"></div>
-              <div><label>قيمة التخارج</label><input id="exitValue" type="number" value="116000000"></div>
-              <div><label>معامل الرسملة %</label><input id="capRate" type="number" value="7.5"></div>
-              <div><label>العائد السنوي المتوقع</label><input id="annualROI" value="15% - 18%"></div>
-              <div><label>نسبة NOI المتوقعة</label><input id="noiRate" value="11% - 13%"></div>
-              <div><label>استرداد رأس المال</label><input id="payback" value="5 سنوات"></div>
+              <div><label>متوسط إيجار المتر</label><input id="avgRent" type="number" value=""></div>
+              <div><label>رسوم الخدمات على المستأجرين %</label><input id="serviceFees" type="number" value=""></div>
+              <div><label>الإيرادات السنوية</label><input id="annualRevenue" type="number" value=""></div>
+              <div><label>المصروف التشغيلي السنوي</label><input id="annualOpex" type="number" value=""></div>
+              <div><label>تكلفة الأرض</label><input id="landCost" type="number" value=""></div>
+              <div><label>تكلفة التطوير</label><input id="developmentCost" type="number" value=""></div>
+              <div><label>إجمالي الربح التشغيلي طوال الفترة</label><input id="totalOperatingProfit" type="number" value=""></div>
+              <div><label>قيمة التخارج</label><input id="exitValue" type="number" value=""></div>
+              <div><label>معامل الرسملة %</label><input id="capRate" type="number" value=""></div>
+              <div><label>العائد السنوي المتوقع</label><input id="annualROI" value=""></div>
+              <div><label>نسبة NOI المتوقعة</label><input id="noiRate" value=""></div>
+              <div><label>استرداد رأس المال</label><input id="payback" value=""></div>
             </div>
             <div class="cards">
               <div class="metric"><span>إجمالي المساحة المبنية</span><strong id="mBuilt">0</strong></div>
@@ -2301,10 +2293,10 @@
             <h2>الجدول الزمني للمشروع</h2>
             <p class="hint">يظهر في العرض كتوزيع سنوي وربع سنوي.</p>
             <div class="grid four">
-              <div><label>سنة البداية</label><input id="timelineStartYear" type="number" value="2026"></div>
-              <div><label>عدد السنوات</label><input id="timelineYearsCount" type="number" value="3" min="1" max="6"></div>
-              <div><label>عنوان الشريحة</label><input id="timelineTitle" value="الجدول الزمني ومراحل المشروع"></div>
-              <div><label>عنوان فرعي</label><input id="timelineSubtitle" value="مراحل التطوير والتنفيذ والتشغيل"></div>
+              <div><label>سنة البداية</label><input id="timelineStartYear" type="number" value=""></div>
+              <div><label>عدد السنوات</label><input id="timelineYearsCount" type="number" value="" min="1" max="6"></div>
+              <div><label>عنوان الشريحة</label><input id="timelineTitle" value=""></div>
+              <div><label>عنوان فرعي</label><input id="timelineSubtitle" value=""></div>
             </div><br>
             <div class="table-wrap"><table id="timelineTable"><thead><tr><th>المسمى</th><th>من سنة</th><th>من ربع</th><th>إلى سنة</th><th>إلى ربع</th><th>اللون</th><th>إزالة</th></tr></thead><tbody></tbody></table></div><br>
             <button class="btn ghost" onclick="addTimelineRow()">+ إضافة مرحلة</button><br><br>
@@ -2315,13 +2307,10 @@
             <h2>شرائح إضافية اختيارية</h2>
             <p class="hint">تظهر قبل آخر خطوة، وهي المود بورد.</p>
             <div class="grid">
-              <div class="full"><label>المخاطر والافتراضات - كل نقطة في سطر</label><textarea id="risks">تغيرات أسعار مواد البناء وتكاليف التطوير
-تغير الطلب السوقي أو معدلات الإشغال
-تغيرات تنظيمية أو اشتراطات بلدية
-اعتماد النتائج النهائية على الدراسة التفصيلية والتصاميم المعتمدة</textarea></div>
-              <div class="full"><label>التوصية الاستثمارية</label><textarea id="recommendation">يمثل المشروع فرصة استثمارية قابلة للدراسة التفصيلية، مع مؤشرات أولية إيجابية مبنية على تنوع عناصر المشروع وإمكانية تحقيق دخل تشغيلي مستقر وقيمة تخارج مجدية.</textarea></div>
-              <div><label>اسم معد العرض</label><input id="preparedBy" value="منافع الاقتصادية للعقار"></div>
-              <div><label>بيانات التواصل</label><input id="contactInfo" value="info@manafe.com | www.manafe.com"></div>
+              <div class="full"><label>المخاطر والافتراضات - كل نقطة في سطر</label><textarea id="risks"></textarea></div>
+              <div class="full"><label>التوصية الاستثمارية</label><textarea id="recommendation"></textarea></div>
+              <div><label>اسم معد العرض</label><input id="preparedBy" value=""></div>
+              <div><label>بيانات التواصل</label><input id="contactInfo" value=""></div>
             </div>
           </section>
 
@@ -2329,9 +2318,9 @@
             <h2>المود بورد بالذكاء الاصطناعي</h2>
             <p class="hint">آخر خطوة: يولد 4 صور فقط بناء على مدخل العميل. يمكن رفع صور مشابهة كمرجع، وكتابة اسم المبنى ليظهر على التصميم.</p>
             <div class="grid">
-              <div><label>اسم المبنى الذي سيظهر على الواجهة</label><input id="buildingName" value="MANAFE"></div>
+              <div><label>اسم المبنى الذي سيظهر على الواجهة</label><input id="buildingName" value=""></div>
               <div><label>نوع اللقطة</label><select id="aiImageStyle"><option>تصميم معماري واقعي فاخر</option><option>مودرن بسيط</option><option>تجاري حضري</option><option>صناعي / لوجستي</option><option>ضيافة وترفيه</option></select></div>
-              <div class="full"><label>وصف الصور المطلوب توليدها بالذكاء الاصطناعي</label><textarea id="aiImagePrompt">مجمّع تجاري إداري حديث في جدة، واجهات زجاجية، لمسات برونزية، نخيل، مساحات خارجية، إضاءة غروب، تصميم فاخر وواقعي، مع ظهور اسم المبنى على الواجهة.</textarea></div>
+              <div class="full"><label>وصف الصور المطلوب توليدها بالذكاء الاصطناعي</label><textarea id="aiImagePrompt"></textarea></div>
               <div><label>صورة مشابهة 1</label><input id="refImage1" type="file" accept="image/*"></div>
               <div><label>صورة مشابهة 2</label><input id="refImage2" type="file" accept="image/*"></div>
             </div><br>
@@ -2341,19 +2330,6 @@
             <div id="aiImages" class="ai-grid"><div class="ai-img">AI Image 1</div><div class="ai-img">AI Image 2</div><div class="ai-img">AI Image 3</div><div class="ai-img">AI Image 4</div></div>
             <div id="promptBox" class="prompt-box hidden"></div>
             <p class="small muted">هذه نسخة Frontend Prototype. التوليد الحقيقي للصور يحتاج Backend/API عند المسار <b>/api/generate-images</b> أو ربطه بخدمة صور مثل OpenAI Images.</p>
-          </section>
-
-          <section class="section" data-title="مراجعة AI">
-            <h2>مراجعة وتعديل الملف قبل التعميد</h2>
-            <p class="hint">بعد توليد الملف، اطلب من AI تعديل النصوص أو إضافة نقاط ثم أعد توليد الملف قبل التعميد والتحميل.</p>
-            <div class="chatbox">
-              <div id="chatLog" class="chatlog"><div class="msg ai">بعد توليد العرض، اكتب طلبك هنا مثل: "اجعل الملخص التنفيذي أكثر فخامة" أو "أضف ميزة عن قرب المشروع من المطار".</div></div>
-              <div class="grid">
-                <div class="full"><textarea id="aiEditRequest" placeholder="اكتب طلب التعديل على الملف هنا..."></textarea></div>
-                <div><button class="btn primary" onclick="applyAIEdit()">تطبيق التعديل على البيانات</button></div>
-                <div><button class="btn ghost" onclick="generatePptx()">إعادة توليد الملف بعد التعديل</button></div>
-              </div>
-            </div>
           </section>
         </main>
       </div>
@@ -2678,47 +2654,46 @@
         function showSection(i) { const secs = [...document.querySelectorAll('#designerPage .section')]; secs.forEach(s => s.classList.remove('active')); document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active')); secs[i].classList.add('active'); document.querySelectorAll('.nav button')[i].classList.add('active'); calculate() }
         function resetForm() {
           document.querySelector('#componentsTable tbody').innerHTML = '';
-          [{name:'معارض تجارية',built:1780,leasable:1780,rent:909},{name:'سكن عمال',built:4725,leasable:3900,rent:273},{name:'ورش / مستودعات',built:5900,leasable:14100,rent:455},{name:'خدمات ومرافق',built:110,leasable:0,rent:0}].forEach(addComponent);
           document.querySelector('#timelineTable tbody').innerHTML = '';
-          [{name:'مرحلة الدراسات والتصاميم',startYear:2026,startQuarter:1,endYear:2026,endQuarter:2,color:'#A9847A'},{name:'مرحلة البناء',startYear:2026,startQuarter:3,endYear:2027,endQuarter:4,color:'#A9847A'},{name:'تسويق المشروع',startYear:2026,startQuarter:2,endYear:2027,endQuarter:4,color:'#8D6E63'},{name:'بدء التشغيل',startYear:2028,startQuarter:1,endYear:2028,endQuarter:3,color:'#C9B08B'}].forEach(addTimelineRow);
 
-          // Set default values matching V3 index.html
-          document.getElementById('projectName').value = "مشروع استثماري جديد";
-          document.getElementById('projectType').value = "تجاري";
-          document.getElementById('city').value = "جدة";
-          document.getElementById('location').value = "طريق رئيسي / حي استراتيجي";
-          document.getElementById('idea').value = "تطوير مشروع استثماري متعدد الاستخدامات يضم عناصر تشغيلية وتأجيرية مصممة لتحقيق عوائد مستقرة وفرصة تخارج مجدية.";
-          document.getElementById('structure').value = "1 سنة تطوير + 4 سنوات تشغيل + تخارج";
-          document.getElementById('developer').value = "منافع الاقتصادية للعقار";
-          document.getElementById('locationFeatures').value = "يقع على محور حيوي يخدم شريحة واسعة من العملاء\nسهولة الوصول من الطرق الرئيسية\nقربه من مناطق الطلب أو الكثافة السكانية/التجارية\nموقع مناسب للتوسع والتشغيل المستقبلي";
-          document.getElementById('projectFeatures').value = "تنوع مصادر الدخل التأجيري\nقابلية التوسع وإضافة أنشطة مستقبلية\nتصميم مرن يناسب أكثر من فئة مستأجرين\nفرصة تخارج جذابة بناءً على الدخل التشغيلي";
-          document.getElementById('investmentHighlights').value = "عوائد تشغيلية متوقعة ومستقرة\nطلب سوقي قابل للنمو\nإمكانية تحسين العائد عبر الإدارة والتشغيل\nأصل عقاري قابل لإعادة التقييم عند التخارج";
-          document.getElementById('landArea').value = "20583.93";
-          document.getElementById('buildingRatio').value = "38";
-          document.getElementById('areaNote').value = "تشمل المساحات التأجيرية المساحات الخارجية الخاصة عند توفرها.";
-          document.getElementById('avgRent').value = "460";
-          document.getElementById('serviceFees').value = "10";
-          document.getElementById('annualRevenue').value = "10000000";
-          document.getElementById('annualOpex').value = "1300000";
-          document.getElementById('landCost').value = "50372236";
-          document.getElementById('developmentCost').value = "24208959";
-          document.getElementById('totalOperatingProfit').value = "26100000";
-          document.getElementById('exitValue').value = "116000000";
-          document.getElementById('capRate').value = "7.5";
-          document.getElementById('annualROI').value = "15% - 18%";
-          document.getElementById('noiRate').value = "11% - 13%";
-          document.getElementById('payback').value = "5 سنوات";
-          document.getElementById('timelineStartYear').value = "2026";
-          document.getElementById('timelineYearsCount').value = "3";
-          document.getElementById('timelineTitle').value = "الجدول الزمني ومراحل المشروع";
-          document.getElementById('timelineSubtitle').value = "مراحل التطوير والتنفيذ والتشغيل";
-          document.getElementById('risks').value = "تغيرات أسعار مواد البناء وتكاليف التطوير\nتغير الطلب السوقي أو معدلات الإشغال\nتغيرات تنظيمية أو اشتراطات بلدية\nاعتماد النتائج النهائية على الدراسة التفسيطية والتصاميم المعتمدة";
-          document.getElementById('recommendation').value = "يمثل المشروع فرصة استثمارية قابلة للدراسة التفصيلية، مع مؤشرات أولية إيجابية مبنية على تنوع عناصر المشروع وإمكانية تحقيق دخل تشغيلي مستقر وقيمة تخارج مجدية.";
-          document.getElementById('preparedBy').value = "منافع الاقتصادية للعقار";
-          document.getElementById('contactInfo').value = "info@manafe.com | www.manafe.com";
-          document.getElementById('buildingName').value = "MANAFE";
-          document.getElementById('aiImageStyle').value = "تصميم معماري واقعي فاخر";
-          document.getElementById('aiImagePrompt').value = "مجمّع تجاري إداري حديث في جدة، واجهات زجاجية، لمسات برونزية، نخيل، مساحات خارجية، إضاءة غروب، تصميم فاخر وواقعي، مع ظهور اسم المبنى على الواجهة.";
+          // Set all values to empty
+          document.getElementById('projectName').value = "";
+          document.getElementById('projectType').selectedIndex = 0;
+          document.getElementById('city').value = "";
+          document.getElementById('location').value = "";
+          document.getElementById('idea').value = "";
+          document.getElementById('structure').value = "";
+          document.getElementById('developer').value = "";
+          document.getElementById('googleMapsLink').value = "";
+          document.getElementById('locationFeatures').value = "";
+          document.getElementById('projectFeatures').value = "";
+          document.getElementById('investmentHighlights').value = "";
+          document.getElementById('landArea').value = "";
+          document.getElementById('buildingRatio').value = "";
+          document.getElementById('areaNote').value = "";
+          document.getElementById('avgRent').value = "";
+          document.getElementById('serviceFees').value = "";
+          document.getElementById('annualRevenue').value = "";
+          document.getElementById('annualOpex').value = "";
+          document.getElementById('landCost').value = "";
+          document.getElementById('developmentCost').value = "";
+          document.getElementById('totalOperatingProfit').value = "";
+          document.getElementById('exitValue').value = "";
+          document.getElementById('capRate').value = "";
+          document.getElementById('annualROI').value = "";
+          document.getElementById('noiRate').value = "";
+          document.getElementById('payback').value = "";
+          document.getElementById('timelineStartYear').value = "";
+          document.getElementById('timelineYearsCount').value = "";
+          document.getElementById('timelineTitle').value = "";
+          document.getElementById('timelineSubtitle').value = "";
+          document.getElementById('risks').value = "";
+          document.getElementById('recommendation').value = "";
+          document.getElementById('preparedBy').value = "";
+          document.getElementById('contactInfo').value = "";
+          document.getElementById('buildingName').value = "";
+          document.getElementById('aiImageStyle').selectedIndex = 0;
+          document.getElementById('aiImagePrompt').value = "";
 
           aiGeneratedImages = [];
           renderAIImages();
@@ -2731,7 +2706,7 @@
         function addTimelineRow(d = {}) { const tb = document.querySelector('#timelineTable tbody'), y = num('timelineStartYear') || 2026, tr = document.createElement('tr'); tr.innerHTML = `<td><input value="${d.name || ''}" placeholder="مثال: مرحلة البناء"></td><td><input type="number" value="${d.startYear || y}"></td><td><select>${quarterLabels.map((q, i) => `<option value="${i + 1}" ${Number(d.startQuarter || 1) === i + 1 ? 'selected' : ''}>${q}</option>`).join('')}</select></td><td><input type="number" value="${d.endYear || y}"></td><td><select>${quarterLabels.map((q, i) => `<option value="${i + 1}" ${Number(d.endQuarter || 2) === i + 1 ? 'selected' : ''}>${q}</option>`).join('')}</select></td><td><select>${timelineColors.map(c => `<option value="${c}" ${d.color === c ? 'selected' : ''}>${c}</option>`).join('')}</select></td><td><button class="btn danger small" onclick="this.closest('tr').remove();renderMiniTimeline()">حذف</button></td>`; tb.appendChild(tr); tr.querySelectorAll('input,select').forEach(x => x.addEventListener('input', renderMiniTimeline)); renderMiniTimeline() }
         function components() { return [...document.querySelectorAll('#componentsTable tbody tr')].map(tr => { const i = tr.querySelectorAll('input'); return { name: i[0].value, built: Number(i[1].value || 0), leasable: Number(i[2].value || 0), rent: Number(i[3].value || 0) } }) }
         function timelineRows() { return [...document.querySelectorAll('#timelineTable tbody tr')].map(tr => { const i = tr.querySelectorAll('input,select'); return { name: i[0].value, startYear: Number(i[1].value || 0), startQuarter: Number(i[2].value || 1), endYear: Number(i[3].value || 0), endQuarter: Number(i[4].value || 1), color: i[5].value || '#A9847A' } }).filter(x => x.name) }
-        function collectData() { return { projectName: val('projectName'), projectType: val('projectType'), city: val('city'), location: val('location'), idea: val('idea'), structure: val('structure'), developer: val('developer'), locationFeatures: lines('locationFeatures'), projectFeatures: lines('projectFeatures'), investmentHighlights: lines('investmentHighlights'), landArea: num('landArea'), buildingRatio: num('buildingRatio'), areaNote: val('areaNote'), components: components(), avgRent: num('avgRent'), serviceFees: num('serviceFees'), annualRevenue: num('annualRevenue'), annualOpex: num('annualOpex'), landCost: num('landCost'), developmentCost: num('developmentCost'), totalOperatingProfit: num('totalOperatingProfit'), exitValue: num('exitValue'), capRate: num('capRate'), annualROI: val('annualROI'), noiRate: val('noiRate'), payback: val('payback'), timelineStartYear: num('timelineStartYear'), timelineYearsCount: num('timelineYearsCount'), timelineTitle: val('timelineTitle'), timelineSubtitle: val('timelineSubtitle'), timelineRows: timelineRows(), risks: lines('risks'), recommendation: val('recommendation'), preparedBy: val('preparedBy'), contactInfo: val('contactInfo'), buildingName: val('buildingName'), aiImageStyle: val('aiImageStyle'), aiImagePrompt: val('aiImagePrompt'), aiGeneratedImages: aiGeneratedImages, mainImageData: mainImageData, slides: geSlidesData } }
+        function collectData() { return { projectName: val('projectName'), projectType: val('projectType'), city: val('city'), location: val('location'), googleMapsLink: val('googleMapsLink'), idea: val('idea'), structure: val('structure'), developer: val('developer'), locationFeatures: lines('locationFeatures'), projectFeatures: lines('projectFeatures'), investmentHighlights: lines('investmentHighlights'), landArea: num('landArea'), buildingRatio: num('buildingRatio'), areaNote: val('areaNote'), components: components(), avgRent: num('avgRent'), serviceFees: num('serviceFees'), annualRevenue: num('annualRevenue'), annualOpex: num('annualOpex'), landCost: num('landCost'), developmentCost: num('developmentCost'), totalOperatingProfit: num('totalOperatingProfit'), exitValue: num('exitValue'), capRate: num('capRate'), annualROI: val('annualROI'), noiRate: val('noiRate'), payback: val('payback'), timelineStartYear: num('timelineStartYear'), timelineYearsCount: num('timelineYearsCount'), timelineTitle: val('timelineTitle'), timelineSubtitle: val('timelineSubtitle'), timelineRows: timelineRows(), risks: lines('risks'), recommendation: val('recommendation'), preparedBy: val('preparedBy'), contactInfo: val('contactInfo'), buildingName: val('buildingName'), aiImageStyle: val('aiImageStyle'), aiImagePrompt: val('aiImagePrompt'), aiGeneratedImages: aiGeneratedImages, mainImageData: mainImageData, slides: geSlidesData } }
         function loadDataToForm(d) { Object.keys(d).forEach(k => { const el = document.getElementById(k); if (el && !Array.isArray(d[k]) && typeof d[k] !== 'object') el.value = d[k] });['locationFeatures', 'projectFeatures', 'investmentHighlights', 'risks'].forEach(k => { if (d[k]) document.getElementById(k).value = d[k].join('\n') }); if (d.components) { document.querySelector('#componentsTable tbody').innerHTML = ''; d.components.forEach(addComponent) } if (d.timelineRows) { document.querySelector('#timelineTable tbody').innerHTML = ''; d.timelineRows.forEach(addTimelineRow) } aiGeneratedImages = d.aiGeneratedImages || []; mainImageData = d.mainImageData || null; geSlidesData = d.slides || []; renderAIImages(); calculate(); renderMiniTimeline() }
         function calculate() { const comps = components(), built = comps.reduce((a, x) => a + x.built, 0), leasable = comps.reduce((a, x) => a + x.leasable, 0), totalCost = num('landCost') + num('developmentCost'), totalProfit = num('totalOperatingProfit') + num('exitValue'); document.getElementById('mBuilt').textContent = money(built) + ' م²'; document.getElementById('mLeasable').textContent = money(leasable) + ' م²'; document.getElementById('mTotalCost').textContent = money(totalCost) + ' ريال'; document.getElementById('mTotalProfit').textContent = money(totalProfit) + ' ريال' } document.addEventListener('input', e => { if (e.target.closest('#designerPage')) calculate() });
         function quarterIndex(y, q) { return y * 4 + (q - 1) } function renderMiniTimeline() { const c = document.getElementById('miniTimeline'); if (!c) return; const start = num('timelineStartYear') || 2026, years = Math.max(1, Math.min(6, num('timelineYearsCount') || 3)), rows = timelineRows(), total = years * 4; let html = '<div class="mini-grid"><div class="mini-head-year"></div>'; for (let y = 0; y < years; y++)html += `<div class="mini-head-year" style="grid-column:span 4">${start + y}</div>`; html += '<div class="mini-head-q"></div>'; for (let y = 0; y < years; y++)quarterLabels.forEach(q => html += `<div class="mini-head-q">${q}</div>`); rows.forEach(r => { html += `<div class="mini-cell mini-label">${r.name}</div>`; for (let q = 0; q < total; q++)html += '<div class="mini-track"></div>' }); html += '</div>'; c.innerHTML = html; const grid = c.querySelector('.mini-grid'); rows.forEach((r, idx) => { const st = quarterIndex(r.startYear, r.startQuarter) - quarterIndex(start, 1), en = quarterIndex(r.endYear, r.endQuarter) - quarterIndex(start, 1); if (en < 0 || st > total - 1) return; const ss = Math.max(0, st), ee = Math.min(total - 1, en), bar = document.createElement('div'); bar.className = 'mini-bar'; bar.style.top = (80 + idx * 44 + 8) + 'px'; bar.style.left = (150 + ss * 80 + 4) + 'px'; bar.style.width = (((ee - ss + 1) * 80) - 8) + 'px'; bar.style.background = r.color; bar.textContent = r.name; grid.appendChild(bar) }) }
@@ -3259,7 +3234,7 @@
             { icon: '🏢', title: 'غلاف المشروع', content: `<div class="ge-slide-title">${d.projectName || 'اسم المشروع'}</div><div class="ge-slide-subtitle">${d.projectType} | ${d.city}</div><div class="ge-slide-body">${d.location ? `<div>📍 ${d.location}</div>` : ''}${d.mainImageData ? `<div class="ge-slide-cover-img" style="margin-top:16px;height:180px;border-radius:12px;overflow:hidden"><img src="${d.mainImageData}" style="width:100%;height:100%;object-fit:cover"></div>` : ''}</div>` },
             { icon: '📊', title: 'الملخص التنفيذي', content: `<div class="ge-slide-title">الملخص التنفيذي</div><div class="ge-slide-subtitle">${d.projectName || ''}</div><div class="ge-slide-body">${d.recommendation || ''}</div><div class="ge-slide-metrics"><div class="ge-metric"><div class="ge-metric-label">إجمالي التكلفة</div><div class="ge-metric-value">${money(d.landCost + d.developmentCost)} ريال</div></div><div class="ge-metric"><div class="ge-metric-label">الإيرادات السنوية</div><div class="ge-metric-value">${money(d.annualRevenue)} ريال</div></div><div class="ge-metric"><div class="ge-metric-label">العائد المتوقع</div><div class="ge-metric-value">${d.annualROI}</div></div></div>` },
             { icon: '💡', title: 'فكرة المشروع والهيكلة', content: `<div class="ge-slide-title">فكرة المشروع والهيكلة</div><div class="ge-slide-metrics"><div class="ge-metric"><div class="ge-metric-label">الفكرة</div><div class="ge-metric-value" style="font-size:14px">${d.idea || '-'}</div></div><div class="ge-metric"><div class="ge-metric-label">الهيكلة</div><div class="ge-metric-value" style="font-size:14px">${d.structure || '-'}</div></div><div class="ge-metric"><div class="ge-metric-label">المطور</div><div class="ge-metric-value" style="font-size:14px">${d.developer || '-'}</div></div></div>` },
-            { icon: '📍', title: 'مميزات الموقع', content: `<div class="ge-slide-title">مميزات الموقع</div><div class="ge-slide-body"><ul>${(d.locationFeatures.length ? d.locationFeatures : ['أدخل مميزات الموقع']).map(f => `<li>${f}</li>`).join('')}</ul></div>` },
+            { icon: '📍', title: 'مميزات الموقع', content: `<div class="ge-slide-title">مميزات الموقع</div><div class="ge-slide-body"><ul>${(d.locationFeatures.length ? d.locationFeatures : ['أدخل مميزات الموقع']).map(f => `<li>${f}</li>`).join('')}</ul>${d.googleMapsLink ? `<div style="margin-top:16px;text-align:center"><a href="${d.googleMapsLink}" target="_blank" class="ge-btn orange" style="display:inline-block;padding:8px 16px;font-size:12px;text-decoration:none;border-radius:6px">فتح موقع المشروع على Google Maps</a></div>` : ''}</div>` },
             { icon: '⭐', title: 'مميزات المشروع', content: `<div class="ge-slide-title">مميزات المشروع</div><div class="ge-slide-body"><ul>${(d.projectFeatures.length ? d.projectFeatures : ['أدخل مميزات المشروع']).map(f => `<li>${f}</li>`).join('')}</ul></div>` },
             { icon: '📐', title: 'مكونات المشروع والمساحات', content: `<div class="ge-slide-title">مكونات المشروع والمساحات</div><div class="ge-slide-metrics">${d.components.map(c => `<div class="ge-metric"><div class="ge-metric-label">${c.name}</div><div class="ge-metric-value" style="font-size:14px">${money(c.built)} م²</div></div>`).join('')}</div>` },
             { icon: '💰', title: 'الربح التشغيلي', content: `<div class="ge-slide-title">الربح التشغيلي التأجيري</div><div class="ge-slide-metrics"><div class="ge-metric"><div class="ge-metric-label">إيجار المتر</div><div class="ge-metric-value">${money(d.avgRent)}</div></div><div class="ge-metric"><div class="ge-metric-label">الإيرادات السنوية</div><div class="ge-metric-value">${money(d.annualRevenue)}</div></div><div class="ge-metric"><div class="ge-metric-label">المصروف التشغيلي</div><div class="ge-metric-value">${money(d.annualOpex)}</div></div></div>` },
@@ -3559,7 +3534,7 @@
           s = pptx.addSlide(); s.background = { color: 'FBFAF8' }; s.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: 13.33, h: 1.1, fill: { color: '7A0C0C' }, line: { color: '7A0C0C' } }); addText(s, 'عرض مشروع استثماري', .65, .32, 12, .35, { fontSize: 18, bold: true, color: 'FFFFFF' }); if (logo) s.addImage({ data: logo, x: .65, y: 1.35, w: 1.6, h: 1.15 }); addText(s, d.projectName, 1.3, 1.65, 10.8, .65, { fontSize: 34, bold: true, color: '7A0C0C', align: 'center' }); addText(s, d.projectType + ' | ' + d.city, 1.3, 2.3, 10.8, .35, { fontSize: 15, color: '777777', align: 'center' }); if (mainImg) s.addImage({ data: mainImg, x: 1.25, y: 3.8, w: 10.85, h: 2.55 }); else { s.addShape(pptx.ShapeType.roundRect, { x: 1.25, y: 3.8, w: 10.85, h: 2.55, rectRadius: .1, fill: { color: 'F5F1ED' }, line: { color: 'E7E0DC' } }); addText(s, 'الصورة الرئيسية للمشروع', 1.25, 4.85, 10.85, .35, { fontSize: 18, color: '999999', align: 'center' }) } addFooter(s, d, n++, manafeLogo);
           s = pptx.addSlide(); addTitle(s, 'الملخص التنفيذي', d.projectName); addText(s, d.recommendation, .75, 1.55, 11.8, 1, { fontSize: 17, color: '444444' }); addMetric(s, 'إجمالي التكلفة', money(totalCost) + ' ريال', .75, 3, 3.8); addMetric(s, 'الإيرادات السنوية', money(d.annualRevenue) + ' ريال', 4.85, 3, 3.8); addMetric(s, 'إجمالي الأرباح طوال الفترة', money(totalProfit) + ' ريال', 8.95, 3, 3.6); addMetric(s, 'العائد السنوي المتوقع', d.annualROI, .75, 4.05, 3.8); addMetric(s, 'NOI المتوقع', d.noiRate, 4.85, 4.05, 3.8); addMetric(s, 'استرداد رأس المال', d.payback, 8.95, 4.05, 3.6); addFooter(s, d, n++, manafeLogo);
           s = pptx.addSlide(); addTitle(s, 'فكرة المشروع والهيكلة', 'تعريف مختصر بالمشروع وموقعه وهيكلته'); addMetric(s, 'فكرة المشروع', d.idea, .75, 1.55, 12, 1.05); addMetric(s, 'الموقع', d.location + ' - ' + d.city, .75, 2.85, 12); addMetric(s, 'هيكلة المشروع', d.structure, .75, 3.85, 12); addMetric(s, 'نوع المشروع', d.projectType, .75, 4.85, 5.8); addMetric(s, 'المطور / الجهة', d.developer, 6.95, 4.85, 5.8); addFooter(s, d, n++, manafeLogo);
-          s = pptx.addSlide(); addTitle(s, 'مميزات الموقع', 'أهم عناصر الجاذبية الجغرافية والتشغيلية'); addBullets(s, d.locationFeatures, .95, 1.65, 11.5, 4.6); addFooter(s, d, n++, manafeLogo);
+          s = pptx.addSlide(); addTitle(s, 'مميزات الموقع', 'أهم عناصر الجاذبية الجغرافية والتشغيلية'); addBullets(s, d.locationFeatures, .95, 1.65, 11.5, 4.6); if (d.googleMapsLink) { s.addShape(pptx.ShapeType.roundRect, { x: 8.8, y: 5.8, w: 4.0, h: 0.5, rectRadius: 0.1, fill: { color: '7A0C0C' }, line: { color: '7A0C0C' } }); addText(s, 'فتح موقع المشروع على Google Maps', 8.8, 5.88, 4.0, 0.35, { fontSize: 11, bold: true, color: 'FFFFFF', align: 'center', hyperlink: { url: d.googleMapsLink, tooltip: 'Google Maps' } }); } addFooter(s, d, n++, manafeLogo);
           s = pptx.addSlide(); addTitle(s, 'مميزات المشروع', 'مزايا المشروع من منظور استثماري وتشغيلي'); addBullets(s, d.projectFeatures, .95, 1.65, 11.5, 4.6); addFooter(s, d, n++, manafeLogo);
           s = pptx.addSlide(); addTitle(s, 'مكونات المشروع والمساحات', 'تفصيل العناصر والمساحات والإيجارات الافتراضية'); addTable(s, [['العنصر', 'المساحة المبنية', 'المساحة التأجيرية', 'الإيجار بالمتر'], ...d.components.map(c => [c.name, money(c.built), money(c.leasable), money(c.rent)]), ['الإجمالي / المتوسط', money(built), money(leasable), money(d.avgRent)]], .55, 1.45, 12.2, 3.65, [3.4, 2.7, 2.7, 2.7]); addMetric(s, 'مساحة الأرض', money(d.landArea) + ' م²', .75, 5.45, 3.8); addMetric(s, 'نسبة البناء', d.buildingRatio + '%', 4.85, 5.45, 3.8); addMetric(s, 'ملاحظة', d.areaNote, 8.95, 5.45, 3.6); addFooter(s, d, n++, manafeLogo);
           s = pptx.addSlide(); addTitle(s, 'افتراضات الربح التشغيلي التأجيري', 'المدخلات المالية الأساسية للتشغيل'); addTable(s, [['البند', 'القيمة'], ['متوسط إيجار المتر', money(d.avgRent)], ['رسوم الخدمات على المستأجرين', d.serviceFees + '%'], ['الإيرادات السنوية', money(d.annualRevenue)], ['المصروف التشغيلي السنوي', money(d.annualOpex)], ['إجمالي الربح التأجيري السنوي', money(annualProfit)]], 1.1, 1.6, 11.1, 3.8, [6.7, 4]); addFooter(s, d, n++, manafeLogo);

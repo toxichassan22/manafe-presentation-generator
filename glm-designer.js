@@ -58,6 +58,10 @@ Rules for IMAGE_SPEC:
 - Max 4 images total
 - Each image must have a clear purpose related to the slide content
 
+=== LINK PLACEMENT ===
+If projectData contains a googleMapsLink, you MUST add a clickable hyperlink text on the 'مميزات الموقع' (Location Features) slide:
+slide.addText('موقع المشروع على قوقل ماب (Google Maps)', { x: x, y: y, w: w, h: h, hyperlink: { url: googleMapsLink_value_from_projectData }, color: 'C4A35A', fontFace: 'Cairo', fontSize: 14, underline: true })
+
 Make 12 slides. Use charts and tables for data. All text same language as topic.
 Return ONLY JS code.`;
 
@@ -280,6 +284,7 @@ async function main() {
 
     var fullCode = `
 var logo = '${logoBase64}';
+var projectData = ${JSON.stringify(projectData || {})};
 
 ${code}
 `;

@@ -694,7 +694,7 @@ app.post('/api/generate-outline', async function(req, res) {
   console.log('\n[Outline] Generating outline structure via GLM 5.1...');
 
   try {
-    var systemContent = 'أنت خبير في إعداد عروض تقديمية استثمارية احترافية لشركات العقارات والاستثمار في السعودية. مهمتك إنشاء هيكل (outline) للعرض التقديمي بناءً على بيانات المشروع.\n\nأعد النتيجة كـ JSON فقط بدون أي نص إضافي بالشكل:\n{\n  "slides": [\n    {\n      "title": "عنوان الشريحة",\n      "bullets": ["نقطة 1", "نقطة 2", "نقطة 3"]\n    }\n  ]\n}\n\nاجعل العرض يحتوي على 10-14 شريحة تشمل:\n1. غلاف المشروع\n2. الملخص التنفيذي\n3. فكرة المشروع والهيكلة\n4. مميزات الموقع\n5. مميزات المشروع\n6. مكونات المشروع والمساحات\n7. الربح التشغيلي\n8. التكاليف\n9. الأرباح والتخارج\n10. الجدول الزمني\n11. المخاطر والتوصيات\n12. المود بورد\n13. شكراً وتواصل\n\nاجعل النقاط مختصرة واحترافية ومحددة. لا تكتب نصاً طويلاً - فقط نقاط ملخصة.';
+    var systemContent = 'أنت خبير في إعداد عروض تقديمية استثمارية احترافية لشركات العقارات والاستثمار في السعودية. مهمتك إنشاء هيكل (outline) للعرض التقديمي بناءً على بيانات المشروع.\n\nأعد النتيجة كـ JSON فقط بدون أي نص إضافي بالشكل:\n{\n  "slides": [\n    {\n      "title": "عنوان الشريحة",\n      "bullets": ["نقطة 1", "نقطة 2", "نقطة 3"]\n    }\n  ]\n}\n\nاجعل العرض يحتوي على 10-14 شريحة تشمل:\n1. غلاف المشروع\n2. الملخص التنفيذي\n3. فكرة المشروع والهيكلة\n4. مميزات الموقع (إذا تم توفير رابط قوقل ماب googleMapsLink في بيانات المشروع، يجب تضمينه كنقطة تحتوي على الرابط لعرضه)\n5. مميزات المشروع\n6. مكونات المشروع والمساحات\n7. الربح التشغيلي\n8. التكاليف\n9. الأرباح والتخارج\n10. الجدول الزمني\n11. المخاطر والتوصيات\n12. المود بورد\n13. شكراً وتواصل\n\nاجعل النقاط مختصرة واحترافية ومحددة. لا تكتب نصاً طويلاً - فقط نقاط ملخصة.';
 
     var response = await fetch(ZAI_BASE + '/chat/completions', {
       method: 'POST',
@@ -791,7 +791,7 @@ app.post('/api/generate-bullets', async function(req, res) {
 
   try {
     var promises = slides.map(function(slide) {
-      var systemContent = 'أنت خبير في العروض التقديمية الاستثمارية. أنشئ 3-5 نقاط مختصرة واحترافية لهذه الشريحة.\n\nأعد النتيجة كـ JSON فقط:\n{"bullets": ["نقطة 1", "نقطة 2", "نقطة 3"]}';
+      var systemContent = 'أنت خبير في العروض التقديمية الاستثمارية. أنشئ 3-5 نقاط مختصرة واحترافية لهذه الشريحة. إذا كانت الشريحة هي "مميزات الموقع" وكان هناك رابط قوقل ماب (googleMapsLink) في بيانات المشروع، أضف نقطة تحتوي على رابط قوقل ماب المعطى بوضوح.\n\nأعد النتيجة كـ JSON فقط:\n{"bullets": ["نقطة 1", "نقطة 2", "نقطة 3"]}';
       var userContent = 'بيانات المشروع:\n' + JSON.stringify(projectData || {}, null, 2) + '\n\nعنوان الشريحة: ' + slide.title;
 
       return fetch(ZAI_BASE + '/chat/completions', {
@@ -886,7 +886,7 @@ app.post('/api/generate-content', async function(req, res) {
   console.log('\n[Content] Generating full slide content via GLM 5.1...');
 
   try {
-    var systemContent = 'أنت كاتب محتوى احترافي للعروض التقديمية الاستثمارية. مهمتك كتابة محتوى كامل ومفصل لكل شريحة في العرض التقديمي.\n\nأعد النتيجة كـ JSON فقط بدون أي نص إضافي بالشكل:\n{\n  "slides": [\n    {\n      "title": "عنوان الشريحة",\n      "content": "<div class=\\"ge-slide-title\\">العنوان</div><div class=\\"ge-slide-subtitle\\">العنوان الفرعي</div><div class=\\"ge-slide-body\\"><ul><li>نقطة 1</li><li>نقطة 2</li></ul></div>"\n    }\n  ]\n}\n\nكل شريحة يجب أن تحتوي على:\n- title: العنوان الرئيسي المختصر\n- content: HTML markup بتنسيق احترافي يستخدم CSS classes: ge-slide-title, ge-slide-subtitle, ge-slide-body, ge-slide-metrics, ge-metric, ge-metric-label, ge-metric-value\n\nاكتب محتوى عربي احترافي ومفصل. استخدم الأرقام والبيانات المالية من بيانات المشروع.';
+    var systemContent = 'أنت كاتب محتوى احترافي للعروض التقديمية الاستثمارية. مهمتك كتابة محتوى كامل ومفصل لكل شريحة في العرض التقديمي. إذا كانت الشريحة هي مميزات الموقع وتم توفير رابط قوقل ماب googleMapsLink في بيانات المشروع، قم بإنشاء زر أو رابط تشعبي HTML واضح (باستخدام <a href="..." target="_blank">) لعرض موقع المشروع على قوقل ماب.\n\nأعد النتيجة كـ JSON فقط بدون أي نص إضافي بالشكل:\n{\n  "slides": [\n    {\n      "title": "عنوان الشريحة",\n      "content": "<div class=\\"ge-slide-title\\">العنوان</div><div class=\\"ge-slide-subtitle\\">العنوان الفرعي</div><div class=\\"ge-slide-body\\"><ul><li>نقطة 1</li><li>نقطة 2</li></ul></div>"\n    }\n  ]\n}\n\nكل شريحة يجب أن تحتوي على:\n- title: العنوان الرئيسي المختصر\n- content: HTML markup بتنسيق احترافي يستخدم CSS classes: ge-slide-title, ge-slide-subtitle, ge-slide-body, ge-slide-metrics, ge-metric, ge-metric-label, ge-metric-value\n\nاكتب محتوى عربي احترافي ومفصل. استخدم الأرقام والبيانات المالية من بيانات المشروع.';
 
     var response = await fetch(ZAI_BASE + '/chat/completions', {
       method: 'POST',
