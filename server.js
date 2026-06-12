@@ -333,11 +333,11 @@ app.post('/api/generate-main-image', async function(req, res) {
       console.log('  Using uploaded image as base reference for main image...');
       image = await callImageAPIWithReference(
         referenceImage,
-        prompt + '. Professional architectural photography, modern luxury building, high quality, no text, no watermarks.'
+        prompt + '. Focus ONLY on the building itself and its architectural details. Keep the background clean and minimal, with absolutely no complex surrounding elements, no unnecessary context, no people, no busy surrounding streets, and no complex landscapes. Just the building itself. Professional architectural photography, modern luxury building, high quality, no text, no watermarks.'
       );
     } else {
       image = await callImageAPI(
-        prompt + '. Professional architectural photography, modern luxury building, high quality, no text, no watermarks.'
+        prompt + '. Focus ONLY on the building itself and its architectural details. Keep the background clean and minimal, with absolutely no complex surrounding elements, no unnecessary context, no people, no busy surrounding streets, and no complex landscapes. Just the building itself. Professional architectural photography, modern luxury building, high quality, no text, no watermarks.'
       );
     }
 
@@ -715,11 +715,11 @@ app.post('/api/generate-slide-image', async function(req, res) {
     if (referenceImage) {
       image = await callImageAPIWithReference(
         referenceImage,
-        prompt + '. Same building style, professional architectural photography, high quality, no text.'
+        prompt + '. Focus ONLY on the building itself and its architectural details. Keep the background clean and minimal, with absolutely no complex surrounding elements, no unnecessary context, no people, no busy surrounding streets, and no complex landscapes. Just the building itself. Same building style, professional architectural photography, high quality, no text.'
       );
     } else {
       image = await callImageAPI(
-        prompt + '. Professional architectural photography, high quality, no text, no watermarks.'
+        prompt + '. Focus ONLY on the building itself and its architectural details. Keep the background clean and minimal, with absolutely no complex surrounding elements, no unnecessary context, no people, no busy surrounding streets, and no complex landscapes. Just the building itself. Professional architectural photography, high quality, no text, no watermarks.'
       );
     }
 

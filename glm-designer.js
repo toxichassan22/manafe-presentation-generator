@@ -135,7 +135,7 @@ async function generateImages(imageSpecs, projectData) {
   if (!firstImage) {
     console.log('  No base cover image found in project data. Generating one...');
     var basePrompt = (projectData ? projectData.aiImagePrompt || projectData.projectName : '') || 'modern luxury architecture';
-    firstImage = await callImageAPI(basePrompt + '. Professional architectural photography, modern luxury building, high quality, no text.');
+    firstImage = await callImageAPI(basePrompt + '. Focus ONLY on the building itself and its architectural details. Keep the background clean and minimal, with absolutely no complex surrounding elements, no unnecessary context, no people, no busy surrounding streets, and no complex landscapes. Just the building itself. Professional architectural photography, modern luxury building, high quality, no text.');
   }
 
   if (firstImage) {
@@ -146,14 +146,14 @@ async function generateImages(imageSpecs, projectData) {
 
       var variantImage = await callImageAPIWithReference(
         firstImage,
-        spec.prompt + '. Same building style, same architectural identity, professional photography, no text.'
+        spec.prompt + '. Focus ONLY on the building itself and its architectural details. Keep the background clean and minimal, with absolutely no complex surrounding elements, no unnecessary context, no people, no busy surrounding streets, and no complex landscapes. Just the building itself. Same building style, same architectural identity, professional photography, no text.'
       );
       if (variantImage) {
         results[spec.slide] = { data: variantImage, x: spec.x, y: spec.y, w: spec.w, h: spec.h };
         console.log('    ✓ Variant created');
       } else {
         // Fallback to standard generation or using firstImage
-        var fallback = await callImageAPI(spec.prompt + '. Professional architectural photography, high quality, no text.');
+        var fallback = await callImageAPI(spec.prompt + '. Focus ONLY on the building itself and its architectural details. Keep the background clean and minimal, with absolutely no complex surrounding elements, no unnecessary context, no people, no busy surrounding streets, and no complex landscapes. Just the building itself. Professional architectural photography, high quality, no text.');
         results[spec.slide] = { data: fallback || firstImage, x: spec.x, y: spec.y, w: spec.w, h: spec.h };
         console.log('    ✓ Used fallback image');
       }
@@ -167,7 +167,7 @@ async function generateImages(imageSpecs, projectData) {
     for (var i = 0; i < imageSpecs.length; i++) {
       var spec = imageSpecs[i];
       console.log('  [' + (i + 1) + '/' + imageSpecs.length + '] Slide ' + spec.slide + ' (independent)...');
-      var img = await callImageAPI(spec.prompt + '. Professional architectural photography, high quality, no text.');
+      var img = await callImageAPI(spec.prompt + '. Focus ONLY on the building itself and its architectural details. Keep the background clean and minimal, with absolutely no complex surrounding elements, no unnecessary context, no people, no busy surrounding streets, and no complex landscapes. Just the building itself. Professional architectural photography, high quality, no text.');
       if (img) {
         results[spec.slide] = { data: img, x: spec.x, y: spec.y, w: spec.w, h: spec.h };
       }
