@@ -62,7 +62,7 @@ Rules for IMAGE_SPEC:
 If projectData contains a googleMapsLink, you MUST add a clickable hyperlink text on the 'مميزات الموقع' (Location Features) slide:
 slide.addText('موقع المشروع على قوقل ماب (Google Maps)', { x: x, y: y, w: w, h: h, hyperlink: { url: googleMapsLink_value_from_projectData }, color: 'C4A35A', fontFace: 'Cairo', fontSize: 14, underline: true })
 
-Make 12 slides. Use charts and tables for data. All text same language as topic.
+Make 14 slides. Use charts and tables for data. All text same language as topic.
 Return ONLY JS code.`;
 
 // ═══ Step 1: GLM generates presentation with image specs ═══
@@ -123,39 +123,58 @@ async function generateWithGLM(topic, projectData) {
 }
 
 // ═══ Step 2: Generate images (first from prompt, rest from reference) ═══
-async function generateImages(imageSpecs) {
+async function generateImages(imageSpecs, projectData) {
   console.log('\n[2/3] Generating ' + imageSpecs.length + ' images...');
   var results = {};
 
   if (imageSpecs.length === 0) return results;
 
-  // First image: generate from prompt
-  var firstSpec = imageSpecs[0];
-  console.log('  [1/' + imageSpecs.length + '] Slide ' + firstSpec.slide + ' (base image)...');
+  // Retrieve base cover image
+  var firstImage = projectData ? projectData.mainImageData : null;
 
-  var firstImage = await callImageAPI(firstSpec.prompt + '. Professional architectural photography, modern luxury building, high quality, no text.');
+  if (!firstImage) {
+    console.log('  No base cover image found in project data. Generating one...');
+    var basePrompt = (projectData ? projectData.aiImagePrompt || projectData.projectName : '') || 'modern luxury architecture';
+    firstImage = await callImageAPI(basePrompt + '. Professional architectural photography, modern luxury building, high quality, no text.');
+  }
+
   if (firstImage) {
-    results[firstSpec.slide] = { data: firstImage, x: firstSpec.x, y: firstSpec.y, w: firstSpec.w, h: firstSpec.h };
-    console.log('    ✓ Base image created');
-
-    // Remaining images: use first image as reference
-    for (var i = 1; i < imageSpecs.length; i++) {
+    console.log('  ✓ Using cover image as reference for all content slide images');
+    for (var i = 0; i < imageSpecs.length; i++) {
       var spec = imageSpecs[i];
-      console.log('  [' + (i + 1) + '/' + imageSpecs.length + '] Slide ' + spec.slide + ' (variant)...');
+      console.log('  [' + (i + 1) + '/' + imageSpecs.length + '] Slide ' + spec.slide + ' (variant from reference)...');
 
-      var variantImage = await callImageAPIWithReference(firstImage, spec.prompt + '. Same building style, same architectural identity, professional photography, no text.');
+      var variantImage = await callImageAPIWithReference(
+        firstImage,
+        spec.prompt + '. Same building style, same architectural identity, professional photography, no text.'
+      );
       if (variantImage) {
         results[spec.slide] = { data: variantImage, x: spec.x, y: spec.y, w: spec.w, h: spec.h };
         console.log('    ✓ Variant created');
       } else {
-        results[spec.slide] = { data: firstImage, x: spec.x, y: spec.y, w: spec.w, h: spec.h };
-        console.log('    ✓ Used base image');
+        // Fallback to standard generation or using firstImage
+        var fallback = await callImageAPI(spec.prompt + '. Professional architectural photography, high quality, no text.');
+        results[spec.slide] = { data: fallback || firstImage, x: spec.x, y: spec.y, w: spec.w, h: spec.h };
+        console.log('    ✓ Used fallback image');
       }
 
-      await new Promise(function(r) { setTimeout(r, 1000); });
+      if (i < imageSpecs.length - 1) {
+        await new Promise(function(r) { setTimeout(r, 1500); });
+      }
     }
   } else {
-    console.log('    ⚠ Failed to create base image');
+    console.log('  ⚠ Failed to get or generate base reference image. Generating independently...');
+    for (var i = 0; i < imageSpecs.length; i++) {
+      var spec = imageSpecs[i];
+      console.log('  [' + (i + 1) + '/' + imageSpecs.length + '] Slide ' + spec.slide + ' (independent)...');
+      var img = await callImageAPI(spec.prompt + '. Professional architectural photography, high quality, no text.');
+      if (img) {
+        results[spec.slide] = { data: img, x: spec.x, y: spec.y, w: spec.w, h: spec.h };
+      }
+      if (i < imageSpecs.length - 1) {
+        await new Promise(function(r) { setTimeout(r, 1500); });
+      }
+    }
   }
 
   return results;
@@ -266,7 +285,7 @@ async function main() {
     // 2. Generate images based on specs
     var images = {};
     if (result.imageSpecs.length > 0) {
-      images = await generateImages(result.imageSpecs);
+      images = await generateImages(result.imageSpecs, projectData);
     }
 
     // 3. Inject images into code at specified positions

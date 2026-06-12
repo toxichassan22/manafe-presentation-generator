@@ -2313,24 +2313,7 @@
               <div><label>بيانات التواصل</label><input id="contactInfo" value=""></div>
             </div>
           </section>
-
-          <section class="section" data-title="المود بورد AI">
-            <h2>المود بورد بالذكاء الاصطناعي</h2>
-            <p class="hint">آخر خطوة: يولد 4 صور فقط بناء على مدخل العميل. يمكن رفع صور مشابهة كمرجع، وكتابة اسم المبنى ليظهر على التصميم.</p>
-            <div class="grid">
-              <div><label>اسم المبنى الذي سيظهر على الواجهة</label><input id="buildingName" value=""></div>
-              <div><label>نوع اللقطة</label><select id="aiImageStyle"><option>تصميم معماري واقعي فاخر</option><option>مودرن بسيط</option><option>تجاري حضري</option><option>صناعي / لوجستي</option><option>ضيافة وترفيه</option></select></div>
-              <div class="full"><label>وصف الصور المطلوب توليدها بالذكاء الاصطناعي</label><textarea id="aiImagePrompt"></textarea></div>
-              <div><label>صورة مشابهة 1</label><input id="refImage1" type="file" accept="image/*"></div>
-              <div><label>صورة مشابهة 2</label><input id="refImage2" type="file" accept="image/*"></div>
-            </div><br>
-            <button class="btn primary" onclick="generateAIImages()">توليد 4 صور AI للمود بورد</button>
-            <button class="btn ghost" onclick="generateImagePromptsOnly()">توليد Prompts فقط</button>
-            <br><br>
-            <div id="aiImages" class="ai-grid"><div class="ai-img">AI Image 1</div><div class="ai-img">AI Image 2</div><div class="ai-img">AI Image 3</div><div class="ai-img">AI Image 4</div></div>
-            <div id="promptBox" class="prompt-box hidden"></div>
-            <p class="small muted">هذه نسخة Frontend Prototype. التوليد الحقيقي للصور يحتاج Backend/API عند المسار <b>/api/generate-images</b> أو ربطه بخدمة صور مثل OpenAI Images.</p>
-          </section>
+          
         </main>
       </div>
     </section>
@@ -2691,12 +2674,7 @@
           document.getElementById('recommendation').value = "";
           document.getElementById('preparedBy').value = "";
           document.getElementById('contactInfo').value = "";
-          document.getElementById('buildingName').value = "";
-          document.getElementById('aiImageStyle').selectedIndex = 0;
-          document.getElementById('aiImagePrompt').value = "";
-
           aiGeneratedImages = [];
-          renderAIImages();
           renderMiniTimeline();
           calculate();
           mainImageData = null;
@@ -3242,7 +3220,7 @@
             { icon: '📈', title: 'الأرباح والتخارج', content: `<div class="ge-slide-title">الأرباح والتخارج</div><div class="ge-slide-metrics"><div class="ge-metric"><div class="ge-metric-label">الربح التشغيلي</div><div class="ge-metric-value">${money(d.totalOperatingProfit)} ريال</div></div><div class="ge-metric"><div class="ge-metric-label">قيمة التخارج</div><div class="ge-metric-value">${money(d.exitValue)} ريال</div></div><div class="ge-metric"><div class="ge-metric-label">معامل الرسملة</div><div class="ge-metric-value">${d.capRate}%</div></div></div>` },
             { icon: '📅', title: 'الجدول الزمني', content: `<div class="ge-slide-title">الجدول الزمني ومراحل المشروع</div><div class="ge-slide-body"><ul>${(d.timelineRows || []).map(r => `<li>${r.name}: Q${r.startQuarter} ${r.startYear} → Q${r.endQuarter} ${r.endYear}</li>`).join('')}</ul></div>` },
             { icon: '⚠️', title: 'المخاطر', content: `<div class="ge-slide-title">المخاطر والافتراضات</div><div class="ge-slide-body"><ul>${(d.risks.length ? d.risks : ['أدخل المخاطر']).map(r => `<li>${r}</li>`).join('')}</ul></div>` },
-            { icon: '🎨', title: 'المود بورد + شكراً', content: `<div class="ge-slide-title">المود بورد بالذكاء الاصطناعي</div><div class="ge-slide-subtitle">${d.buildingName || ''}</div><div class="ge-slide-body">${d.aiImagePrompt || ''}</div>` }
+            { icon: '🙏', title: 'شكراً وتواصل', content: `<div class="ge-slide-title" style="color:#7A0C0C">شكراً لكم</div><div class="ge-slide-subtitle">${d.projectName || ''}</div><div class="ge-slide-body" style="text-align:center"><div>معد العرض: ${d.preparedBy || ''}</div><div>تواصل: ${d.contactInfo || ''}</div></div>` }
           ];
         }
         function renderGeSidebar() {
@@ -3544,7 +3522,6 @@
           s = pptx.addSlide(); addTitle(s, d.timelineTitle || 'الجدول الزمني ومراحل المشروع', d.timelineSubtitle || 'مراحل التطوير والتنفيذ والتشغيل'); drawTimelineSlide(s, d); addFooter(s, d, n++, manafeLogo);
           s = pptx.addSlide(); addTitle(s, 'فرص الاستثمار ونقاط القوة', 'أسباب جاذبية المشروع'); addBullets(s, d.investmentHighlights, .95, 1.65, 11.5, 4.6); addFooter(s, d, n++, manafeLogo);
           s = pptx.addSlide(); addTitle(s, 'المخاطر والافتراضات', 'نقاط يجب التحقق منها في الدراسة التفصيلية'); addBullets(s, d.risks, .95, 1.65, 11.5, 4.6); addFooter(s, d, n++, manafeLogo);
-          s = pptx.addSlide(); addTitle(s, 'المود بورد بالذكاء الاصطناعي', 'تصورات بصرية مبدئية مبنية على مدخلات العميل'); addText(s, 'اسم المبنى: ' + d.buildingName, .75, 1.36, 4, .28, { fontSize: 12, bold: true, color: '7A0C0C' }); addText(s, d.aiImagePrompt, .75, 1.7, 11.8, .45, { fontSize: 10, color: '6B625D' });[{ x: .75, y: 2.25, w: 5.7, h: 1.75 }, { x: 6.85, y: 2.25, w: 5.7, h: 1.75 }, { x: .75, y: 4.45, w: 5.7, h: 1.75 }, { x: 6.85, y: 4.45, w: 5.7, h: 1.75 }].forEach((slot, i) => { s.addShape(pptx.ShapeType.roundRect, { x: slot.x, y: slot.y, w: slot.w, h: slot.h, rectRadius: .05, fill: { color: 'F8F4EF' }, line: { color: 'E7E0DC' } }); const item = d.aiGeneratedImages[i]; if (item?.url) s.addImage({ data: item.url, x: slot.x + .04, y: slot.y + .04, w: slot.w - .08, h: slot.h - .08 }); else addText(s, (item?.label || ('AI Image ' + (i + 1))) + '\\n' + d.buildingName, slot.x, slot.y + .58, slot.w, .42, { fontSize: 14, bold: true, color: 'A9847A', align: 'center' }) }); addFooter(s, d, n++, manafeLogo);
           s = pptx.addSlide(); s.background = { color: '7A0C0C' }; if (manafeLogo) s.addImage({ data: manafeLogo, x: 5.55, y: 1, w: 2.2, h: 1.45 }); addText(s, 'شكراً لكم', .9, 2.6, 11.5, .7, { fontSize: 40, bold: true, color: 'FFFFFF', align: 'center' }); addText(s, d.projectName, .9, 3.45, 11.5, .4, { fontSize: 20, color: 'F5DDDD', align: 'center' }); addText(s, d.contactInfo, .9, 4.55, 11.5, .4, { fontSize: 16, color: 'FFFFFF', align: 'center' }); addText(s, d.preparedBy, .9, 5.1, 11.5, .3, { fontSize: 13, color: 'F5DDDD', align: 'center' });
           await pptx.writeFile({ fileName: `${d.projectName || 'investment-project'}_generated.pptx` }); markGenerated(); if (showMsg) { addChat('ai', 'تم توليد ملف PowerPoint. يمكنك طلب تعديلات هنا قبل التعميد.'); toast('تم توليد الملف وحفظه في الأرشيف') }
         }
