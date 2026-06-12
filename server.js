@@ -304,6 +304,7 @@ app.get('/api/get-training', function(req, res) {
 // ─────────────────────────────────────────────
 app.post('/api/generate-main-image', async function(req, res) {
   var prompt = req.body.prompt;
+  var referenceImage = req.body.referenceImage;
   if (!prompt) {
     return res.status(400).json({ error: 'Prompt is required' });
   }
@@ -312,9 +313,18 @@ app.post('/api/generate-main-image', async function(req, res) {
   console.log('  Prompt: ' + prompt.substring(0, 100) + '...');
 
   try {
-    var image = await callImageAPI(
-      prompt + '. Professional architectural photography, modern luxury building, high quality, no text, no watermarks.'
-    );
+    var image;
+    if (referenceImage) {
+      console.log('  Using uploaded image as base reference for main image...');
+      image = await callImageAPIWithReference(
+        referenceImage,
+        prompt + '. Professional architectural photography, modern luxury building, high quality, no text, no watermarks.'
+      );
+    } else {
+      image = await callImageAPI(
+        prompt + '. Professional architectural photography, modern luxury building, high quality, no text, no watermarks.'
+      );
+    }
 
     if (image) {
       console.log('  ✓ Main image generated successfully');
@@ -344,51 +354,65 @@ app.post('/api/generate-images', async function(req, res) {
 
   try {
     var images = [];
-    var firstImage = referenceImage;
+    var baseReference = referenceImage;
 
-    if (!firstImage) {
-      // First image: generate from prompt
+    if (baseReference) {
+      console.log('  ✓ Using uploaded main image as base reference for all generated images...');
+      for (var i = 0; i < prompts.length; i++) {
+        console.log('  [' + (i + 1) + '/' + prompts.length + '] Generating variant from reference...');
+        var img = await callImageAPIWithReference(
+          baseReference,
+          prompts[i] + '. Same building style, same architectural identity, professional photography, no text.'
+        );
+        if (img) {
+          images.push({ url: img, prompt: prompts[i] });
+          console.log('    ✓ Variant created');
+        } else {
+          // fallback to standard generation or copy reference
+          var fallback = await callImageAPI(prompts[i] + '. Professional architectural photography, high quality, no text.');
+          images.push({ url: fallback || baseReference, prompt: prompts[i] });
+          console.log('    ✓ Fallback created');
+        }
+        if (i < prompts.length - 1) {
+          await new Promise(function(r) { setTimeout(r, 1500); });
+        }
+      }
+    } else {
+      // No reference image, generate first one independently and use it as reference for rest
       console.log('  [1/' + prompts.length + '] Base image...');
-      firstImage = await callImageAPI(
+      var firstImage = await callImageAPI(
         prompts[0] + '. Professional architectural photography, modern luxury building, high quality, no text.'
       );
       if (firstImage) {
         images.push({ url: firstImage, prompt: prompts[0] });
         console.log('    ✓ Base image created');
-      }
-    } else {
-      console.log('    ✓ Using approved cover image as reference for consistency');
-      images.push({ url: firstImage, prompt: prompts[0] });
-    }
 
-    if (firstImage) {
-      // Remaining images: use first image as reference for consistency
-      for (var i = images.length; i < prompts.length; i++) {
-        console.log('  [' + (i + 1) + '/' + prompts.length + '] Variant image...');
-        var variant = await callImageAPIWithReference(
-          firstImage,
-          prompts[i] + '. Same building style, same architectural identity, professional photography, no text.'
-        );
-        if (variant) {
-          images.push({ url: variant, prompt: prompts[i] });
-          console.log('    ✓ Variant created');
-        } else {
-          images.push({ url: firstImage, prompt: prompts[i] });
-          console.log('    ✓ Used base image as fallback');
-        }
-        // Rate limit delay
-        await new Promise(function(r) { setTimeout(r, 1500); });
-      }
-    } else {
-      // If first image fails and no reference, generate all independently
-      for (var i = 0; i < prompts.length; i++) {
-        console.log('  [' + (i + 1) + '/' + prompts.length + '] Independent image...');
-        var img = await callImageAPI(
-          prompts[i] + '. Professional architectural photography, high quality, no text.'
-        );
-        images.push({ url: img, prompt: prompts[i] });
-        if (i < prompts.length - 1) {
+        for (var i = 1; i < prompts.length; i++) {
+          console.log('  [' + (i + 1) + '/' + prompts.length + '] Variant image...');
+          var variant = await callImageAPIWithReference(
+            firstImage,
+            prompts[i] + '. Same building style, same architectural identity, professional photography, no text.'
+          );
+          if (variant) {
+            images.push({ url: variant, prompt: prompts[i] });
+            console.log('    ✓ Variant created');
+          } else {
+            images.push({ url: firstImage, prompt: prompts[i] });
+            console.log('    ✓ Used base image as fallback');
+          }
           await new Promise(function(r) { setTimeout(r, 1500); });
+        }
+      } else {
+        // If first image fails, generate all independently
+        for (var i = 0; i < prompts.length; i++) {
+          console.log('  [' + (i + 1) + '/' + prompts.length + '] Independent image...');
+          var img = await callImageAPI(
+            prompts[i] + '. Professional architectural photography, high quality, no text.'
+          );
+          images.push({ url: img, prompt: prompts[i] });
+          if (i < prompts.length - 1) {
+            await new Promise(function(r) { setTimeout(r, 1500); });
+          }
         }
       }
     }
