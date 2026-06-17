@@ -61,8 +61,8 @@ def register_fonts():
     font_paths = [
         ('tahoma', 'C:/Windows/Fonts/tahoma.ttf'),
         ('tahomabd', 'C:/Windows/Fonts/tahomabd.ttf'),
-        ('TheSansArabic-Light', str(PROJECT_ROOT / 'assets' / 'fonts' / 'THESANSARABIC-LIGHT.ttf')),
-        ('TheSansArabic-Bold', str(PROJECT_ROOT / 'assets' / 'fonts' / 'THESANSARABIC-BOLD.ttf')),
+        ('TheSansArabic-Light', str(PROJECT_ROOT / 'assets' / 'fonts' / 'TheSansArabic-Light.otf')),
+        ('TheSansArabic-Bold', str(PROJECT_ROOT / 'assets' / 'fonts' / 'BahijTheSansArabic-Bold.ttf')),
         ('NotoSansArabic-Regular', '/usr/share/fonts/truetype/noto/NotoSansArabic-Regular.ttf'),
         ('NotoSansArabic-Bold', '/usr/share/fonts/truetype/noto/NotoSansArabic-Bold.ttf'),
         ('DejaVuSans', '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'),

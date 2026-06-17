@@ -20,8 +20,8 @@ FONT_DIR = str(PROJECT_ROOT / 'assets' / 'fonts')
 def _font_face_css():
     faces = []
     font_files = {
-        'TheSansArabic-Light': ('TheSansArabic-Light', 'THESANSARABIC-LIGHT.ttf'),
-        'TheSansArabic-Bold': ('TheSansArabic-Bold', 'THESANSARABIC-BOLD.ttf'),
+        'TheSansArabic-Light': ('TheSansArabic-Light', 'TheSansArabic-Light.otf'),
+        'TheSansArabic-Bold': ('TheSansArabic-Bold', 'BahijTheSansArabic-Bold.ttf'),
     }
     for family, (name, filename) in font_files.items():
         fp = os.path.join(FONT_DIR, filename)

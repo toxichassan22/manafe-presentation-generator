@@ -1336,7 +1336,7 @@ Colors:
   - DARK TEXT: #0F172A — body text
   - MUTED TEXT: #64748B — captions, footer
   - CARD BG: #F8FAFC — card backgrounds with subtle depth
-Font: 'Cairo', 'Tajawal', Arial, sans-serif — DO NOT use 'The Sans Arabic' or any font not listed here.
+Font: 'The Sans Arabic', Arial, sans-serif — DO NOT use Cairo or any font not listed here.
 RTL direction for all text.
 
 ═════════════════════════════════════════════════════════════════
@@ -1357,7 +1357,7 @@ CRITICAL RULES
 13. Use professional linear icons (Location Pin, Road, Accessibility, etc.)
 14. Add subtle geometric/architectural background patterns (light lines, shapes)
 15. CRITICAL: Content must fit within slide boundaries. NEVER let text overflow. Use overflow:hidden on the container div. If content is long, reduce font size or use ellipsis — but NEVER exceed the slide area.
-16. CRITICAL: Use 'The Sans Arabic', 'Cairo', 'Tajawal', Arial as fonts.
+16. CRITICAL: Use 'The Sans Arabic', Arial as fonts.
 17. CRITICAL: PRESERVE THE EXACT TEXT from the outline. Do NOT paraphrase, abbreviate, or modify the user's content. If the outline says "صافي الربح التشغيلي بلغ 15 مليون ريال سعودي" — write EXACTLY that, not a shorter version. The user's words are sacred.
 
 ═════════════════════════════════════════════════════════════════
@@ -1394,7 +1394,7 @@ Each slide's "html" must be a COMPLETE, self-contained HTML string with ALL styl
 - dir="rtl" lang="ar"
 - width: 1280px, height: 720px
 - overflow: hidden
-- font-family: 'The Sans Arabic', 'Cairo', 'Tajawal', Arial, sans-serif
+- font-family: 'The Sans Arabic', Arial, sans-serif
 - position: relative
 - background: white
 - box-sizing: border-box
@@ -1815,7 +1815,7 @@ DESIGN_VARIATIONS = [
 # Condensed single-slide prompt — short base rules only
 CONDENSED_DESIGN_PROMPT = """You are a luxury real estate presentation designer for "منافع الاقتصادية للعقار".
 Brand colors: Burgundy #670D0C, Gold #C2A176, Silver #A7A9AC, Beige #F5F0EE, White #FFFFFF, Dark #0F172A
-Font: 'The Sans Arabic', 'Cairo', 'Tajawal', Arial
+Font: 'The Sans Arabic', Arial
 RTL layout. Arabic text only. ALL text alignment RIGHT.
 
 ══════════════════════════════════════════════════════════════════
@@ -1823,7 +1823,7 @@ CRITICAL: SLIDE DIMENSIONS — MUST BE EXACT
 ══════════════════════════════════════════════════════════════════
 The slide is EXACTLY 1280px wide × 720px tall (16:9 aspect ratio).
 Your outer container div MUST have these EXACT styles:
-  dir="rtl" lang="ar" width:1280px; height:720px; overflow:hidden; position:relative; box-sizing:border-box; font-family:'The Sans Arabic','Cairo','Tajawal',Arial,sans-serif
+  dir="rtl" lang="ar" width:1280px; height:720px; overflow:hidden; position:relative; box-sizing:border-box; font-family:'The Sans Arabic',Arial,sans-serif
 ALL content MUST fit within 1280×720. NEVER exceed the boundaries.
 DO NOT use width:700px, transform:scale(), or small inner containers. The outer div IS the full slide.
 
@@ -1849,7 +1849,7 @@ MANDATORY FOOTER (bottom of every slide)
 ══════════════════════════════════════════════════════════════════
 DESIGN RULES
 ══════════════════════════════════════════════════════════════════
-1. Outer <div> with ALL inline CSS: dir="rtl" lang="ar", width:1280px, height:720px, overflow:hidden, position:relative, box-sizing:border-box, font-family:'The Sans Arabic','Cairo','Tajawal',Arial,sans-serif
+1. Outer <div> with ALL inline CSS: dir="rtl" lang="ar", width:1280px, height:720px, overflow:hidden, position:relative, box-sizing:border-box, font-family:'The Sans Arabic',Arial,sans-serif
 2. Card-based layouts, rounded corners (12-16px), subtle shadows (0 4px 20px rgba(0,0,0,0.06)).
 3. Financial numbers MUST be LARGE: 32-40px, font-weight:900, color:burgundy or dark. Make them the visual focal point.
 4. Max 3 colors per slide. Use generous white space — content area is between header and footer ONLY.
@@ -2032,7 +2032,7 @@ Return ONLY valid JSON with this exact structure:
     "background_color": "#FBFAF8",
     "card_background": "#FFFFFF",
     "accent_color": "#A7A9AC",
-    "font_family": "'The Sans Arabic', 'Cairo', 'Tajawal', Arial, sans-serif",
+    "font_family": "'The Sans Arabic', Arial, sans-serif",
     "header_html": "<!-- HTML for the header section -->",
     "footer_html": "<!-- HTML for the footer section -->",
     "card_style": "border-radius:14px; box-shadow:0 4px 20px rgba(0,0,0,0.06);",
@@ -2129,7 +2129,7 @@ def generate_blueprint(project_data, user_id):
             "background_color": "#FBFAF8",
             "card_background": "#FFFFFF",
             "accent_color": "#A7A9AC",
-            "font_family": "'The Sans Arabic', 'Cairo', 'Tajawal', Arial, sans-serif",
+            "font_family": "'The Sans Arabic', Arial, sans-serif",
             "header_html": '<div style="position:relative;z-index:3;display:flex;align-items:center;justify-content:space-between;padding:14px 32px 12px;border-bottom:1px solid #EFE7DC;background:linear-gradient(180deg,rgba(255,255,255,.7),rgba(255,255,255,.0))"><div style="display:flex;align-items:center;gap:12px"><img src="##LOGO##" style="height:48px;width:auto;object-fit:contain;display:block"><div style="width:1px;height:28px;background:#EFE7DC"></div><div style="font-size:13px;font-weight:800;color:#670D0C;letter-spacing:.2px">{{TITLE}}</div></div><div style="display:flex;align-items:center;gap:8px"><div style="font-size:10px;font-weight:700;color:#888;letter-spacing:.5px">مشروع استثماري</div><div style="width:8px;height:8px;border-radius:50%;background:#C2A176"></div></div></div>',
             "footer_html": '<div style="position:relative;z-index:3;display:flex;align-items:center;justify-content:space-between;padding:10px 32px;border-top:1px solid #EFE7DC;background:linear-gradient(0deg,rgba(255,255,255,.7),rgba(255,255,255,.0))"><div style="display:flex;align-items:center;gap:12px"><div style="width:28px;height:28px;border-radius:50%;background:#670D0C;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900">{{PAGE}}</div><div style="font-size:11px;color:#888;font-weight:600">/ {{TOTAL}}</div></div><div style="font-size:12px;color:#7A0C0C;font-weight:800">{{PROJECT}}</div><div style="font-size:11px;color:#888;font-weight:600">منافع الاقتصادية للعقار</div></div>',
             "card_style": "border-radius:14px; box-shadow:0 4px 20px rgba(0,0,0,0.06); background:#FFFFFF; padding:20px;",
@@ -2154,7 +2154,7 @@ def _generate_single_slide(slide_data, project_data, user_id, variation_idx=0, b
 
     # COVER SLIDE — hardcoded template, NO GLM call
     if idx == 0 or slide_type == 'cover':
-        cover_html = f'''<div dir="rtl" lang="ar" style="width:1280px;height:720px;position:relative;overflow:hidden;font-family:'The Sans Arabic','Cairo','Tajawal',Arial,sans-serif;background:#1A0505;">
+        cover_html = f'''<div dir="rtl" lang="ar" style="width:1280px;height:720px;position:relative;overflow:hidden;font-family:'The Sans Arabic',Arial,sans-serif;background:#1A0505;">
 <img src="##IMAGE_COVER##" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;">
 <div style="position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,rgba(26,5,5,0.7) 0%,rgba(103,13,12,0.5) 100%);"></div>
 <svg style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0.06;z-index:1" viewBox="0 0 1280 720"><line x1="0" y1="0" x2="1280" y2="720" stroke="#C2A176" stroke-width="1"/><line x1="1280" y1="0" x2="0" y2="720" stroke="#C2A176" stroke-width="1"/><rect x="100" y="100" width="1080" height="520" fill="none" stroke="#C2A176" stroke-width="0.5"/></svg>
@@ -2172,7 +2172,7 @@ def _generate_single_slide(slide_data, project_data, user_id, variation_idx=0, b
 
     # CLOSING SLIDE — hardcoded template, NO GLM call
     if idx == slide_data.get('total_slides', 99) - 1 or slide_type == 'closing':
-        closing_html = f'''<div dir="rtl" lang="ar" style="width:1280px;height:720px;position:relative;overflow:hidden;font-family:'The Sans Arabic','Cairo','Tajawal',Arial,sans-serif;background:#670D0C;">
+        closing_html = f'''<div dir="rtl" lang="ar" style="width:1280px;height:720px;position:relative;overflow:hidden;font-family:'The Sans Arabic',Arial,sans-serif;background:#670D0C;">
 <img src="##IMAGE_COVER##" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;opacity:0.25;">
 <div style="position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(180deg,rgba(103,13,12,0.92) 0%,rgba(80,10,10,0.95) 100%);"></div>
 <svg style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0.05;z-index:1" viewBox="0 0 1280 720"><line x1="0" y1="180" x2="1280" y2="180" stroke="#C2A176" stroke-width="0.5"/><line x1="0" y1="540" x2="1280" y2="540" stroke="#C2A176" stroke-width="0.5"/><rect x="80" y="80" width="1120" height="560" fill="none" stroke="#C2A176" stroke-width="0.5"/></svg>
@@ -2341,7 +2341,7 @@ def _generate_single_slide_legacy(slide_data, project_data, user_id):
 
     # COVER — hardcoded
     if idx == 0 or slide_type == 'cover':
-        cover_html = f'''<div dir="rtl" lang="ar" style="width:1280px;height:720px;position:relative;overflow:hidden;font-family:'The Sans Arabic','Cairo','Tajawal',Arial,sans-serif;background:#1A0505;'>
+        cover_html = f'''<div dir="rtl" lang="ar" style="width:1280px;height:720px;position:relative;overflow:hidden;font-family:'The Sans Arabic',Arial,sans-serif;background:#1A0505;'>
 <img src="##IMAGE_COVER##" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;">
 <div style="position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,rgba(26,5,5,0.7) 0%,rgba(103,13,12,0.5) 100%);"></div>
 <div style="position:absolute;top:0;right:0;width:53px;height:100%;background:#670D0C;"></div>
@@ -2359,7 +2359,7 @@ def _generate_single_slide_legacy(slide_data, project_data, user_id):
 
     # CLOSING — hardcoded
     if idx == slide_data.get('total_slides', 99) - 1 or slide_type == 'closing':
-        closing_html = f'''<div dir="rtl" lang="ar" style="width:1280px;height:720px;position:relative;overflow:hidden;font-family:'The Sans Arabic','Cairo','Tajawal',Arial,sans-serif;background:#670D0C;">
+        closing_html = f'''<div dir="rtl" lang="ar" style="width:1280px;height:720px;position:relative;overflow:hidden;font-family:'The Sans Arabic',Arial,sans-serif;background:#670D0C;">
 <div style="position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(180deg,rgba(103,13,12,1) 0%,rgba(80,10,10,1) 100%);"></div>
 <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;width:80%;">
 <div style="background:rgba(255,255,255,0.95);border-radius:20px;padding:24px 40px;display:inline-block;margin-bottom:30px;box-shadow:0 8px 32px rgba(0,0,0,0.3);">
@@ -2668,7 +2668,7 @@ def api_redesign_slide():
                 'Redesign this specific slide based on the user request. '
                 'Return a JSON object with: { "title": "new title (keep if not changing)", "html": "new complete HTML with inline CSS" }. '
                 'Keep the same brand colors: burgundy #670D0C, gold #C2A176, silver #A7A9AC, beige #F5F0EE. '
-                'Font: The Sans Arabic, Cairo. RTL layout. '
+                'Font: The Sans Arabic. RTL layout. '
                 'The html must be a complete div with ALL inline styles, width:100%, height:100%, dir=rtl, lang=ar. '
                 'If images were in the original slide, keep them in the redesigned version.'
             )
@@ -3361,11 +3361,14 @@ def api_export_pdf():
 
         font_dir = str(project_root / 'assets' / 'fonts')
         font_faces = ''
-        for fname in ['THESANSARABIC-LIGHT.ttf', 'THESANSARABIC-BOLD.ttf']:
+        for fname in ['TheSansArabic-Light.otf', 'BahijTheSansArabic-Bold.ttf']:
             fpath = os.path.join(font_dir, fname)
             if os.path.exists(fpath):
                 uri = Path(fpath).as_uri()
-                family = fname.replace('THESANSARABIC-', 'TheSansArabic-').replace('.ttf', '')
+                if 'Light' in fname:
+                    family = 'TheSansArabic-Light'
+                else:
+                    family = 'TheSansArabic-Bold'
                 font_faces += f"@font-face {{ font-family:'{family}'; src:url('{uri}') format('truetype'); font-weight:normal; font-style:normal; font-display:swap; }}\n"
         
         full_html = f"""<!DOCTYPE html>
